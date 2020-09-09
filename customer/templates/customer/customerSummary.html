@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customers Summary</title>
+  <link rel="icon" href="{% static 'images/GM.png' %}"/>
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/dataTables.bootstrap4.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/customerStyles.css' %}">
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.bootstrap4.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+	<div class="container mt-3 mb-5">
+
+		<div class="row h3 mb-4 pl-2">Customers Summary</div>
+
+		<table class="table table-striped table-borderless" style="width: 100%;" id="customerDataTable">
+			<thead>
+				<tr>
+					<th>Date Registered</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Date of Birth</th>
+					<th>City</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>2020-09-08</td>
+					<td>Moon-Young</td>
+					<td>Ko</td>
+					<td>1990-04-06</td>
+					<td>Seoul</td>
+					<td>
+						<button class="border-0 bg-transparent viewColor"><i class="material-icons align-middle">visibility</i></button>
+						|
+						<button class="border-0 bg-transparent deleteColor"><i class="material-icons align-middle">delete</i></button>
+					</td>
+				</tr>
+				<tr>
+					<td>2020-09-09</td>
+					<td>Gang-Tae</td>
+					<td>Moon</td>
+					<td>1988-02-16</td>
+					<td>Seoul</td>
+					<td>
+						<button class="border-0 bg-transparent viewColor"><i class="material-icons align-middle">visibility</i></button>
+						|
+						<button class="border-0 bg-transparent deleteColor"><i class="material-icons align-middle">delete</i></button>
+					</td>
+				</tr>
+				<tr>
+					<td>2020-09-10</td>
+					<td>Sang-Tae</td>
+					<td>Moon</td>
+					<td>1977-02-26</td>
+					<td>Uiryeong-gun</td>
+					<td>
+						<button class="border-0 bg-transparent viewColor"><i class="material-icons align-middle">visibility</i></button>
+						|
+						<button class="border-0 bg-transparent deleteColor"><i class="material-icons align-middle">delete</i></button>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<th>Date Registered</th>
+				<th>FirstName</th>
+				<th>LastName</th>
+				<th>Date of Birth</th>
+				<th>Address</th>
+				<th>Action</th>
+			</tfoot>
+		</table>
+	</div>
+
+	<!-- Delete Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header p-2 pl-4 bg-danger text-white">
+					<h5 class="modal-title" id="deleteModalLabel">Delete Account</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<i class="material-icons align-middle text-white">close</i>
+					</button>
+				</div>
+				<div class="modal-body pl-4">
+					<i class="material-icons align-middle text-danger">warning</i> Are you sure you want to delete this account?
+				</div>
+				<div class="modal-footer border-top-0">
+					<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-danger">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- View Modal -->
+	<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header p-2 pl-4 bg-primary text-white">
+					<h5 class="modal-title" id="viewModalLabel">View Account</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<i class="material-icons align-middle text-white">close</i>
+					</button>
+				</div>
+				<div class="modal-body pl-4">
+
+					<div class="form-row h6 pl-1 pt-3">Date Registered</div>
+					<div class="form-row"><input type="date"class="form-control" name="dateRegField" readonly required></div>
+
+					<div class="form-row h6 pl-1 pt-3">First Name</div>
+					<div class="form-row"><input type="text"class="form-control" name="firstField" placeholder="First Name" required></div>
+
+					<div class="form-row h6 pl-1 pt-3">Last Name</div>
+					<div class="form-row"><input type="text"class="form-control" name="lastField" placeholder="Last Name" required></div>
+
+					<div class="form-row h6 pl-1 pt-3">Date of Birth</div>
+					<div class="form-row"><input type="date"class="form-control" name="birthField" required></div>
+
+					<div class="form-row h6 pl-1 pt-3">City</div>
+					<div class="form-row"><input type="text"class="form-control" name="cityField" placeholder="City" required></div>
+
+				</div>
+				<div class="modal-footer border-top-0">
+					<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Update</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+  <!--scripts-->
+	<script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+	<script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+	<script src="{% static 'js/customerScript.js' %}"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.bootstrap4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.colVis.min.js"></script>
+	<!--/scripts-->
+</body>
+</html>
