@@ -1,16 +1,12 @@
+{% extends 'navigation/navigation.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Customer Registration</title>
-  <link rel="icon" href="{% static 'images/GM.png' %}"/>
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% block title %}Customer Registration{% endblock %}
+
+  {% block header %}
   <link rel="stylesheet" href="{% static 'css/customerStyles.css' %}">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-</head>
-<body>
+  {% endblock %}
+
+  {% block content %}
   <div class="container p-4 pb-5">
     <div class="row h3">Add New Customer</div>
     <div class="row text-center mt-4" id="stepLinks">
@@ -34,44 +30,45 @@
     <div class="row border border-top-0">
       <div class="col pt-3 pb-3">
         <!--Add customer form-->
-        <form id="addCustomerForm">
+        <form id="addCustomerForm" method="POST">
+          {% csrf_token %}
           <!--Personal information-->
           <div id="personalInfo">
 
             <div class="form-row h6 pl-3">Name</div>
             <div class="form-row">
               <div class="col">
-                <input type="text"class="form-control" placeholder="First Name" required>
+                <input type="text" class="form-control" name="firstName" placeholder="First Name" >
               </div>
               <div class="col">
-                <input type="text"class="form-control" placeholder="Middle Name" required>
+                <input type="text" class="form-control" name="middleName" placeholder="Middle Name" >
               </div>
               <div class="col">
-                <input type="text"class="form-control" placeholder="Last Name" required>
+                <input type="text" class="form-control" name="lastName" placeholder="Last Name" >
               </div>
             </div>
 
             <div class="form-row h6 pl-3 pt-3">Address</div>
             <div class="form-row">
               <div class="col">
-                <input type="text"class="form-control" placeholder="Street" required>
+                <input type="text" class="form-control" name="street" placeholder="Street" >
               </div>
               <div class="col">
-                <input type="text"class="form-control" placeholder="Barangay" required>
+                <input type="text" class="form-control" name="barangay" placeholder="Barangay" >
               </div>
               <div class="col">
-                <input type="text"class="form-control" placeholder="City" required>
+                <input type="text" class="form-control" name="city" placeholder="City" >
               </div>
             </div>
              <div class="form-row pt-2">
               <div class="col">
-                <input type="text"class="form-control" placeholder="Province" required>
+                <input type="text" class="form-control" name="province" placeholder="Province" >
               </div>
               <div class="col">
-                <input type="text"class="form-control" placeholder="ZIP Code" required>
+                <input type="text" class="form-control" name="zipCode" placeholder="ZIP Code" >
               </div>
               <div class="col">
-                <input type="text"class="form-control" placeholder="Country" required>
+                <input type="text" class="form-control" name="country" placeholder="Country" >
               </div>
             </div>
 
@@ -82,10 +79,10 @@
             </div>
             <div class="form-row">
               <div class="col">
-                <input type="date" class="form-control">
+                <input type="date" name="birthdate" class="form-control">
               </div>
               <div class="col">
-                <select class="form-control">
+                <select class="form-control" name="status">
                   <option>Single</option>
                   <option>Married</option>
                   <option>Divorced</option>
@@ -93,7 +90,7 @@
                 </select>
               </div>
               <div class="col">
-                <select class="form-control">
+                <select class="form-control" name="gender">
                   <option>Male</option>
                   <option>Female</option>
                 </select>
@@ -107,13 +104,13 @@
             </div>
             <div class="form-row">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="Spouse's Name" required>
+                <input type="text" class="form-control" name="spouseName" placeholder="Spouse's Name" >
               </div>
               <div class="col-4">
-                <input type="text"class="form-control" placeholder="Spouse's Occupation" required>
+                <input type="text" class="form-control" name="spouseOccupation" placeholder="Spouse's Occupation" >
               </div>
               <div class="col-2">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number" class="form-control" name="childrenNum" placeholder="0" >
               </div>
             </div>
 
@@ -123,10 +120,10 @@
             </div>
             <div class="form-row">
               <div class="col">
-                <input type="text"class="form-control" placeholder="Mother's Name" required>
+                <input type="text" class="form-control" name="motherName" placeholder="Mother's Name" >
               </div>
               <div class="col">
-                <input type="text"class="form-control" placeholder="Mother's Occupation" required>
+                <input type="text" class="form-control" name="motherOccupation" placeholder="Mother's Occupation" >
               </div>
             </div>
 
@@ -136,10 +133,10 @@
             </div>
             <div class="form-row">
               <div class="col">
-                <input type="text"class="form-control" placeholder="Father's Name" required>
+                <input type="text" class="form-control" name="fatherName" placeholder="Father's Name" >
               </div>
               <div class="col">
-                <input type="text"class="form-control" placeholder="Father's Occupation" required>
+                <input type="text" class="form-control" name="fatherOccupation" placeholder="Father's Occupation" >
               </div>
             </div>
 
@@ -150,13 +147,13 @@
             </div>
             <div class="form-row">
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number" class="form-control" name="height" placeholder="0" >
               </div>
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number" class="form-control" name="weight" placeholder="0" >
               </div>
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="Religion" required>
+                <input type="text" class="form-control" name="religion" placeholder="Religion" >
               </div>
             </div>
             
@@ -187,19 +184,19 @@
             </div>
             <div class="form-row">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="School" required>
+                <input type="text"class="form-control" placeholder="School" >
               </div>
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number"class="form-control" placeholder="0" >
               </div>
               <div class="col-3">
-                <input type="date"class="form-control" required>
+                <input type="date"class="form-control" >
               </div>
             </div>
             <div class="form-row h6 pl-3 pt-2">Awards</div>
             <div class="form-row">
               <div class="col-3">
-                <input type="number"class="form-control awardsCounter" placeholder="0" required>
+                <input type="number"class="form-control awardsCounter" placeholder="0" >
               </div>
               <div class="col-9">
                 <ol class="awardsList">
@@ -215,19 +212,19 @@
             </div>
             <div class="form-row">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="School" required>
+                <input type="text"class="form-control" placeholder="School" >
               </div>
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number"class="form-control" placeholder="0" >
               </div>
               <div class="col-3">
-                <input type="date"class="form-control" required>
+                <input type="date"class="form-control" >
               </div>
             </div>
             <div class="form-row h6 pl-3 pt-2">Awards</div>
             <div class="form-row">
               <div class="col-3">
-                <input type="number"class="form-control awardsCounter" placeholder="0" required>
+                <input type="number"class="form-control awardsCounter" placeholder="0" >
               </div>
               <div class="col-9">
                 <ol class="awardsList">
@@ -243,25 +240,25 @@
             </div>
             <div class="form-row">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="School" required>
+                <input type="text"class="form-control" placeholder="School" >
               </div>
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number"class="form-control" placeholder="0" >
               </div>
               <div class="col-3">
-                <input type="date"class="form-control" required>
+                <input type="date"class="form-control" >
               </div>
             </div>
             <div class="form-row pt-2">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="Strand" required>
+                <input type="text"class="form-control" placeholder="Strand" >
               </div>
               <div class="col-6"></div>
             </div>
             <div class="form-row h6 pl-3 pt-2">Awards</div>
             <div class="form-row">
               <div class="col-3">
-                <input type="number"class="form-control awardsCounter" placeholder="0" required>
+                <input type="number"class="form-control awardsCounter" placeholder="0" >
               </div>
               <div class="col-9">
                 <ol class="awardsList">
@@ -277,25 +274,25 @@
             </div>
             <div class="form-row">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="School" required>
+                <input type="text"class="form-control" placeholder="School" >
               </div>
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number"class="form-control" placeholder="0" >
               </div>
               <div class="col-3">
-                <input type="date"class="form-control" required>
+                <input type="date"class="form-control" >
               </div>
             </div>
             <div class="form-row pt-2">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="Course" required>
+                <input type="text"class="form-control" placeholder="Course" >
               </div>
               <div class="col-6"></div>
             </div>
             <div class="form-row h6 pl-3 pt-2">Awards</div>
             <div class="form-row">
               <div class="col-3">
-                <input type="number"class="form-control awardsCounter" placeholder="0" required>
+                <input type="number"class="form-control awardsCounter" placeholder="0" >
               </div>
               <div class="col-9">
                 <ol class="awardsList">
@@ -311,25 +308,25 @@
             </div>
             <div class="form-row">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="School" required>
+                <input type="text"class="form-control" placeholder="School" >
               </div>
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number"class="form-control" placeholder="0" >
               </div>
               <div class="col-3">
-                <input type="date"class="form-control" required>
+                <input type="date"class="form-control" >
               </div>
             </div>
             <div class="form-row pt-2">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="Course" required>
+                <input type="text"class="form-control" placeholder="Course" >
               </div>
               <div class="col-6"></div>
             </div>
             <div class="form-row h6 pl-3 pt-2">Awards</div>
             <div class="form-row">
               <div class="col-3">
-                <input type="number"class="form-control awardsCounter" placeholder="0" required>
+                <input type="number"class="form-control awardsCounter" placeholder="0" >
               </div>
               <div class="col-9">
                 <ol class="awardsList"><!--Append awards here--></ol>
@@ -373,11 +370,13 @@
       </div>
     </div>
   </div>
+  {% endblock %}
 
   <!--scripts-->
-	<script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
-	<script src="{% static 'js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'js/customerScript.js' %}"></script>
+  {% block footer %}
+  <script src="{% static 'js/customerScript.js' %}"></script>
+  <script>
+		$("a[href='../customer/registration']").children().addClass('active').parent().parent().siblings().children().children().removeClass('active');
+	</script>
+  {% endblock %}
 	<!--/scripts-->
-</body>
-</html>

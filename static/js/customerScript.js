@@ -144,7 +144,7 @@ $(document).ready(function(){
     var datefrom = '<span class="date-label mr-1 mt-1">From:</span><input type="date" class="form-control form-control-sm" id="datefrom"><i class="material-icons mt-1" id="clearfrom">close</i>';
     var dateto = '<span class="date-label mr-1 mt-1">To:</span><input type="date" class="form-control form-control-sm" id="dateto"><i class="material-icons mt-1" id="clearto">close</i>';
     //var addCustomerButton = '<input type="submit" value="Add Customer" class="btn btn-block btn-primary" id="addCustomer">';
-    var addCustomerButton = '<a class="btn btn-block btn-primary" href="../customer/customerRegistration">Add Customer</a>';
+    var addCustomerButton = '<a class="btn btn-block btn-primary" href="../customer/registration">Add Customer</a>';
     $(".datefrombar").append(datefrom);
     $(".datetobar").append(dateto);
     $(".addCustomerBar").append(addCustomerButton);

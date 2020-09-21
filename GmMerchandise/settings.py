@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'customer'
+    'customer',
+    'navigation',
 ]
 
 MIDDLEWARE = [
@@ -76,14 +77,14 @@ WSGI_APPLICATION = 'GmMerchandise.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        # 'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'sample',
-        # 'USER': 'root',
-        # 'PASSWORD': 'root',
-        # 'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
-        # 'PORT': '3306',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'gm',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',   # Or IP
+        'PORT': '3306',
     }
 }
 
