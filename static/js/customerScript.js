@@ -123,7 +123,7 @@ $(document).ready(function(){
         "<'row'<'col-sm-12'tr>>" +
         "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-2'B><'col-sm-12 col-md-2 addCustomerBar'><'col-sm-12 col-md-3'p>>",
         "oLanguage": {
-            "sSearch": "Filter Data"
+            "sSearch": "Search:"
           },
         buttons: [
             {
