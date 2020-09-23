@@ -1,18 +1,14 @@
+{% extends 'navigation/navigation.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Customer Registration</title>
-  <link rel="icon" href="{% static 'images/GM.png' %}"/>
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% block title %}Customer Registration{% endblock %}
+
+  {% block header %}
   <link rel="stylesheet" href="{% static 'css/customerStyles.css' %}">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-</head>
-<body>
-  <div class="container p-4 pb-5">
-    <div class="row h3">Add New Customer</div>
+  {% endblock %}
+
+  {% block content %}
+  <div class="container px-4 pb-5">
+    <div class="row h3">New Customer Form</div>
     <div class="row text-center mt-4" id="stepLinks">
 
       <div class="col h5 mb-0 active" id="personalLink" href="#personalInfo">
@@ -34,135 +30,188 @@
     <div class="row border border-top-0">
       <div class="col pt-3 pb-3">
         <!--Add customer form-->
-        <form id="addCustomerForm">
+        <form id="addCustomerForm" method="POST">
+          {% csrf_token %}
           <!--Personal information-->
           <div id="personalInfo">
 
-            <div class="form-row h6 pl-3">Name</div>
-            <div class="form-row">
-              <div class="col">
-                <input type="text"class="form-control" placeholder="First Name" required>
-              </div>
-              <div class="col">
-                <input type="text"class="form-control" placeholder="Middle Name" required>
-              </div>
-              <div class="col">
-                <input type="text"class="form-control" placeholder="Last Name" required>
-              </div>
-            </div>
-
-            <div class="form-row h6 pl-3 pt-3">Address</div>
-            <div class="form-row">
-              <div class="col">
-                <input type="text"class="form-control" placeholder="Street" required>
-              </div>
-              <div class="col">
-                <input type="text"class="form-control" placeholder="Barangay" required>
-              </div>
-              <div class="col">
-                <input type="text"class="form-control" placeholder="City" required>
-              </div>
-            </div>
-             <div class="form-row pt-2">
-              <div class="col">
-                <input type="text"class="form-control" placeholder="Province" required>
-              </div>
-              <div class="col">
-                <input type="text"class="form-control" placeholder="ZIP Code" required>
-              </div>
-              <div class="col">
-                <input type="text"class="form-control" placeholder="Country" required>
-              </div>
-            </div>
-
+            <span class="text-danger">* Required</span>
             <div class="form-row h6 pl-2 pt-3">
-              <div class="col">Birthdate</div>
-              <div class="col">Status</div>
-              <div class="col">Gender</div>
+              <div class="col">First Name<span class="text-danger">&nbsp;*</span></div>
+              <div class="col">Middle Name</div>
+              <div class="col">Last Name<span class="text-danger">&nbsp;*</span></div>
             </div>
             <div class="form-row">
               <div class="col">
-                <input type="date" class="form-control">
+                <input type="text" class="form-control" name="firstName" maxlength="50" value required>
+                <span class="text-danger"></span>
               </div>
               <div class="col">
-                <select class="form-control">
-                  <option>Single</option>
-                  <option>Married</option>
-                  <option>Divorced</option>
-                  <option>Widow/Widower</option>
+                <input type="text" class="form-control" name="middleName" maxlength="50">
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" name="lastName" maxlength="50" value required>
+                <span class="text-danger"></span>
+              </div>
+            </div>
+
+            <div class="form-row h6 pl-2 pt-4">
+              <div class="col">Street</div>
+              <div class="col">Barangay<span class="text-danger">&nbsp;*</span></div>
+              <div class="col">City<span class="text-danger">&nbsp;*</span></div>
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <input type="text" class="form-control" name="street" maxlength="50">
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" name="barangay" maxlength="50" value required>
+                <span class="text-danger"></span>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" name="city" maxlength="50" value required>
+                <span class="text-danger"></span>
+              </div>
+            </div>
+            <div class="form-row h6 pl-2 pt-2">
+              <div class="col">Province<span class="text-danger">&nbsp;*</span></div>
+              <div class="col">Zip Code<span class="text-danger">&nbsp;*</span></div>
+              <div class="col">Country<span class="text-danger">&nbsp;*</span></div>
+            </div>
+             <div class="form-row">
+              <div class="col">
+                <input type="text" class="form-control" name="province" maxlength="50" value required>
+                <span class="text-danger"></span>
+              </div>
+              <div class="col">
+                <input type="number" class="form-control" name="zipCode" min="0" oninput="if (parseInt(this.value) > 9999) {
+                  this.value = parseInt(this.value/10); }" onkeydown="if(event.key==='.'||event.key==='-'){event.preventDefault();}" value required>
+                <span class="text-danger"></span>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" name="country" maxlength="50" value required>
+                <span class="text-danger"></span>
+              </div>
+            </div>
+
+            <div class="form-row h6 pl-2 pt-4">
+              <div class="col">Birthdate<span class="text-danger">&nbsp;*</span></div>
+              <div class="col">Status<span class="text-danger">&nbsp;*</span></div>
+              <div class="col">Gender<span class="text-danger">&nbsp;*</span></div>
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <input type="date" name="birthdate" class="form-control" value required>
+                <span class="text-danger"></span>
+              </div>
+              <div class="col">
+                <select class="form-control" name="status" required>
+                  <option disabled selected> -- Select an option -- </option>
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Divorced">Divorced</option>
+                  <option value="Widow/Widower">Widow/Widower</option>
                 </select>
+                <span class="text-danger"></span>
               </div>
-              <div class="col">
-                <select class="form-control">
+              <div class="col text-center"><!--
+                <select class="form-control" name="gender">
                   <option>Male</option>
                   <option>Female</option>
-                </select>
+                </select>-->
+                <div class="form-row yellowBorder">
+                  <div class="col my-auto">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gender" id="maleRadio" value="Male">
+                      <label class="form-check-label" for="maleRadio">
+                        Male
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col my-auto">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gender" id="femaleRadio" value="Female">
+                      <label class="form-check-label" for="femaleRadio">
+                        Female
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <span class="text-danger genderWarn d-flex flex-fill" style="padding-top: 1.5px;"></span>
               </div>
+              
             </div>
 
             <div class="form-row h6 pl-2 pt-3">
-               <div class="col-6">Spouse</div>
-               <div class="col-4"></div>
+               <div class="col-6">Spouse's Name</div>
+               <div class="col-4">Spouse's Occupation</div>
                <div class="col-2">No. of Children</div>
             </div>
             <div class="form-row">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="Spouse's Name" required>
+                <input type="text" class="form-control" name="spouseName" maxlength="50" >
               </div>
               <div class="col-4">
-                <input type="text"class="form-control" placeholder="Spouse's Occupation" required>
+                <input type="text" class="form-control" name="spouseOccupation" maxlength="50" >
               </div>
               <div class="col-2">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number" class="form-control" name="childrenNum" min=0 value="0" oninput="this.value = parseInt(this.value); if (parseInt(this.value) > 99) {
+                  this.value = parseInt(this.value/10); }" onkeydown="if(event.key==='.'||event.key==='-'){event.preventDefault();}">
               </div>
             </div>
 
             <div class="form-row h6 pl-2 pt-3">
-               <div class="col">Mother</div>
-               <div class="col"></div>
+               <div class="col">Mother's Name<span class="text-danger">&nbsp;*</span></div>
+               <div class="col">Mother's Occupation</div>
             </div>
             <div class="form-row">
               <div class="col">
-                <input type="text"class="form-control" placeholder="Mother's Name" required>
+                <input type="text" class="form-control" name="motherName" maxlength="50" value required>
+                <span class="text-danger"></span>
               </div>
               <div class="col">
-                <input type="text"class="form-control" placeholder="Mother's Occupation" required>
+                <input type="text" class="form-control" name="motherOccupation" maxlength="50" >
               </div>
             </div>
 
             <div class="form-row h6 pl-2 pt-3">
-               <div class="col">Father</div>
-               <div class="col"></div>
+               <div class="col">Father's Name<span class="text-danger">&nbsp;*</span></div>
+               <div class="col">Father's Occupation</div>
             </div>
             <div class="form-row">
               <div class="col">
-                <input type="text"class="form-control" placeholder="Father's Name" required>
+                <input type="text" class="form-control" name="fatherName" maxlength="50" value required>
+                <span class="text-danger"></span>
               </div>
               <div class="col">
-                <input type="text"class="form-control" placeholder="Father's Occupation" required>
+                <input type="text" class="form-control" name="fatherOccupation" maxlength="50" >
               </div>
             </div>
 
             <div class="form-row h6 pl-2 pt-3">
-                <div class="col-3">Height(cm)</div>
-                 <div class="col-3">Weight(kg)</div>
+                <div class="col-3">Height(cm)<span class="text-danger">&nbsp;*</span></div>
+                 <div class="col-3">Weight(kg)<span class="text-danger">&nbsp;*</span></div>
                  <div class="col-6">Religion</div>
             </div>
             <div class="form-row">
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number" class="form-control" name="height" min="0" oninput="this.value = parseFloat(this.value); if (parseInt(this.value) > 999) {
+                  this.value = parseInt(this.value/10); }" onkeydown="if(event.key==='-'){event.preventDefault();}" value required>
+                <span class="text-danger"></span>
               </div>
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number" class="form-control" name="weight" min="0" oninput="this.value = parseFloat(this.value); if (parseInt(this.value) > 999) {
+                  this.value = parseInt(this.value/10); }" onkeydown="if(event.key==='-'){event.preventDefault();}" value required>
+                <span class="text-danger"></span>
               </div>
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="Religion" required>
+                <input type="text" class="form-control" name="religion" maxlength="50" >
               </div>
             </div>
             
             <div class="form-row h6 pl-3 pt-3">Profile Picture</div>
             <div class="form-row pl-2 align-items-end">
-              <div class="picBox"><img src="{% static 'images/img1.jpg' %}" class="picBoxImage" id="profDisplay"></div>
+              <div class="picBox"><img src="{% static 'images/avatar.png' %}" class="picBoxImage" id="profDisplay"></div>
               <label for="profpic" class="profpic-upload ml-2 mb-0">
                 <i class="material-icons align-middle">add_photo_alternate</i>
                 Choose File
@@ -187,19 +236,19 @@
             </div>
             <div class="form-row">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="School" required>
+                <input type="text"class="form-control" placeholder="School" >
               </div>
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number"class="form-control" placeholder="0" >
               </div>
               <div class="col-3">
-                <input type="date"class="form-control" required>
+                <input type="date"class="form-control" >
               </div>
             </div>
             <div class="form-row h6 pl-3 pt-2">Awards</div>
             <div class="form-row">
               <div class="col-3">
-                <input type="number"class="form-control awardsCounter" placeholder="0" required>
+                <input type="number"class="form-control awardsCounter" placeholder="0" >
               </div>
               <div class="col-9">
                 <ol class="awardsList">
@@ -215,19 +264,19 @@
             </div>
             <div class="form-row">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="School" required>
+                <input type="text"class="form-control" placeholder="School" >
               </div>
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number"class="form-control" placeholder="0" >
               </div>
               <div class="col-3">
-                <input type="date"class="form-control" required>
+                <input type="date"class="form-control" >
               </div>
             </div>
             <div class="form-row h6 pl-3 pt-2">Awards</div>
             <div class="form-row">
               <div class="col-3">
-                <input type="number"class="form-control awardsCounter" placeholder="0" required>
+                <input type="number"class="form-control awardsCounter" placeholder="0" >
               </div>
               <div class="col-9">
                 <ol class="awardsList">
@@ -243,25 +292,25 @@
             </div>
             <div class="form-row">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="School" required>
+                <input type="text"class="form-control" placeholder="School" >
               </div>
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number"class="form-control" placeholder="0" >
               </div>
               <div class="col-3">
-                <input type="date"class="form-control" required>
+                <input type="date"class="form-control" >
               </div>
             </div>
             <div class="form-row pt-2">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="Strand" required>
+                <input type="text"class="form-control" placeholder="Strand" >
               </div>
               <div class="col-6"></div>
             </div>
             <div class="form-row h6 pl-3 pt-2">Awards</div>
             <div class="form-row">
               <div class="col-3">
-                <input type="number"class="form-control awardsCounter" placeholder="0" required>
+                <input type="number"class="form-control awardsCounter" placeholder="0" >
               </div>
               <div class="col-9">
                 <ol class="awardsList">
@@ -277,25 +326,25 @@
             </div>
             <div class="form-row">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="School" required>
+                <input type="text"class="form-control" placeholder="School" >
               </div>
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number"class="form-control" placeholder="0" >
               </div>
               <div class="col-3">
-                <input type="date"class="form-control" required>
+                <input type="date"class="form-control" >
               </div>
             </div>
             <div class="form-row pt-2">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="Course" required>
+                <input type="text"class="form-control" placeholder="Course" >
               </div>
               <div class="col-6"></div>
             </div>
             <div class="form-row h6 pl-3 pt-2">Awards</div>
             <div class="form-row">
               <div class="col-3">
-                <input type="number"class="form-control awardsCounter" placeholder="0" required>
+                <input type="number"class="form-control awardsCounter" placeholder="0" >
               </div>
               <div class="col-9">
                 <ol class="awardsList">
@@ -311,25 +360,25 @@
             </div>
             <div class="form-row">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="School" required>
+                <input type="text"class="form-control" placeholder="School" >
               </div>
               <div class="col-3">
-                <input type="number"class="form-control" placeholder="0" required>
+                <input type="number"class="form-control" placeholder="0" >
               </div>
               <div class="col-3">
-                <input type="date"class="form-control" required>
+                <input type="date"class="form-control" >
               </div>
             </div>
             <div class="form-row pt-2">
               <div class="col-6">
-                <input type="text"class="form-control" placeholder="Course" required>
+                <input type="text"class="form-control" placeholder="Course" >
               </div>
               <div class="col-6"></div>
             </div>
             <div class="form-row h6 pl-3 pt-2">Awards</div>
             <div class="form-row">
               <div class="col-3">
-                <input type="number"class="form-control awardsCounter" placeholder="0" required>
+                <input type="number"class="form-control awardsCounter" placeholder="0" >
               </div>
               <div class="col-9">
                 <ol class="awardsList"><!--Append awards here--></ol>
@@ -373,11 +422,13 @@
       </div>
     </div>
   </div>
+  {% endblock %}
 
   <!--scripts-->
-	<script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
-	<script src="{% static 'js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'js/customerScript.js' %}"></script>
+  {% block footer %}
+  <script src="{% static 'js/customerScript.js' %}"></script>
+  <script>
+		$("a[href='../customer/registration']").children().addClass('active').parent().parent().siblings().children().children().removeClass('active');
+	</script>
+  {% endblock %}
 	<!--/scripts-->
-</body>
-</html>
