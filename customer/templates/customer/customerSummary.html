@@ -52,7 +52,15 @@
 							</div>
 							<div class="modal-body pl-4">
 
-								<div class="form-row h6">Date Registered</div>
+								<div class="form-row">
+									{% if customer.profilePic != None %}
+									<div class="picBox2 mx-auto"><img src="../static/images/{{customer.profilePic}}" class="picBoxImage"></div>
+									{% else %}
+									<div class="picBox2 mx-auto"><img src="{% static 'images/avatar.png' %}" class="picBoxImage"></div>
+									{% endif %}
+								</div>
+
+								<div class="form-row h6 pt-4">Date Registered</div>
 								<div class="form-row"><input type="date"class="form-control" name="dateRegField" value="{{customer.dateRegistered|date:'o-m-d'}}" readonly></div>
 
 								<div class="form-row h6 pt-3">First Name</div>
@@ -123,8 +131,12 @@
 											<option id="Single-{{customer.id}}">Single</option>
 											<option id="Married-{{customer.id}}">Married</option>
 											<option id="Divorced-{{customer.id}}">Divorced</option>
-											<option id="Widow/Widower-{{customer.id}}">Widow/Widower</option>
-											
+											<option id="Widow/Wido-{{customer.id}}">Widow/Widower</option>
+											<script>
+												var att = document.createAttribute("selected");
+												att.value = "";
+												document.getElementById("{{customer.status}}-{{customer.id}}").setAttributeNode(att);
+											</script>
 										</select>
 									</div>
 									<div class="col pr-0">
@@ -155,11 +167,7 @@
 											
 										</div>
 									</div>
-									<script>
-										var att = document.createAttribute("selected");
-										att.value = "";
-										document.getElementById("{{customer.status}}-{{customer.id}}").setAttributeNode(att);
-									</script>
+									
 								</div>
 
 								<div class="form-row h6 pt-4">Spouse's Name</div>

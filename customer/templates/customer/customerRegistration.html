@@ -30,7 +30,7 @@
     <div class="row border border-top-0">
       <div class="col pt-3 pb-3">
         <!--Add customer form-->
-        <form id="addCustomerForm" method="POST">
+        <form id="addCustomerForm" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
           <!--Personal information-->
           <div id="personalInfo">
@@ -216,7 +216,7 @@
                 <i class="material-icons align-middle">add_photo_alternate</i>
                 Choose File
               </label>
-              <input type="file" id="profpic" accept="image/*" onchange="readURL(this);" hidden>
+              <input type="file" id="profpic" name="profilePic" accept="image/*" onchange="readURL(this);" hidden>
             </div>
 
             <div class="form-row h6 pl-2 pt-5">

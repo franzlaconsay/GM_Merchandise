@@ -82,13 +82,14 @@ $("#personalNext").click(function(){
             }
         }
     }
-    if(isValid.includes(0) || genderValid==false) alert("invalid");
-    else alert("valid");
-    // $("#educationalLink").addClass('active').siblings().removeClass('active');
-    // var target = "#educationalBackground";
-    // $(target).removeAttr('hidden').siblings().attr('hidden','hidden');
-    // $("#progress2").css("width","100%");
-    // $("html, body").animate({ scrollTop: 0 }, 500);
+    if(isValid.includes(0) || genderValid==false);
+    else{
+        $("#educationalLink").addClass('active').siblings().removeClass('active');
+        var target = "#educationalBackground";
+        $(target).removeAttr('hidden').siblings().attr('hidden','hidden');
+        $("#progress2").css("width","100%");
+        $("html, body").animate({ scrollTop: 0 }, 500);
+    }
 });
 
 $("#educationalPrevious").click(function(){

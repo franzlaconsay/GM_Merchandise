@@ -135,6 +135,13 @@
   border-radius: 10px;
 }
 
+.picBox2 {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #868686;
+  border-radius: 10px;
+}
+
 .picBoxImage {
   width: 200px;
   height: 200px;

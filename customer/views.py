@@ -17,7 +17,7 @@ class RegistrationView(View):
     return render(request, 'customer/customerRegistration.html')
 
   def post(self,request):
-    form = CustomerForm(request.POST)
+    form = CustomerForm(request.POST, request.FILES)
     firstName = request.POST.get("firstName")
     middleName = request.POST.get("middleName")
     lastName = request.POST.get("lastName")
@@ -40,6 +40,8 @@ class RegistrationView(View):
     height = request.POST.get("height")
     weight = request.POST.get("weight")
     religion = request.POST.get("religion")
+    profilePic = request.FILES.get("profilePic")
+    print(profilePic)
     form = Customer(firstName = firstName, middleName = middleName, lastName = lastName,
                     street = street, barangay = barangay, city = city,
                     province = province, zipCode = zipCode, country = country,
@@ -47,6 +49,6 @@ class RegistrationView(View):
                     spouseName = spouseName, spouseOccupation = spouseOccupation, childrenNum = childrenNum,
                     motherName = motherName, motherOccupation = motherOccupation,
                     fatherName  = fatherName, fatherOccupation = fatherOccupation,
-                    height = height, weight = weight, religion = religion)
+                    height = height, weight = weight, religion = religion, profilePic = profilePic)
     form.save()
     return render(request, 'customer/customerSummary.html')
