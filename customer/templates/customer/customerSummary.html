@@ -25,42 +25,210 @@
 				</tr>
 			</thead>
 			<tbody>
+				{% for customer in customers %}
 				<tr>
-					<td>2020-09-08</td>
-					<td>Moon-Young</td>
-					<td>Ko</td>
-					<td>1990-04-06</td>
-					<td>Seoul</td>
+					<td>{{customer.dateRegistered}}</td>
+					<td>{{customer.firstName}}</td>
+					<td>{{customer.lastName}}</td>
+					<td>{{customer.birthdate}}</td>
+					<td>{{customer.city}}</td>
 					<td>
-						<button class="border-0 bg-transparent viewColor"><i class="material-icons align-middle">visibility</i></button>
+						<!--<button class="border-0 bg-transparent viewColor"><i class="material-icons align-middle">visibility</i></button>-->
+						<button class="border-0 bg-transparent viewColor" data-toggle="modal" data-target="#viewModal-{{customer.id}}">
+							<i class="material-icons align-middle">visibility</i></button>
 						|
 						<button class="border-0 bg-transparent deleteColor"><i class="material-icons align-middle">delete</i></button>
 					</td>
 				</tr>
-				<tr>
-					<td>2020-09-09</td>
-					<td>Gang-Tae</td>
-					<td>Moon</td>
-					<td>1988-02-16</td>
-					<td>Seoul</td>
-					<td>
-						<button class="border-0 bg-transparent viewColor"><i class="material-icons align-middle">visibility</i></button>
-						|
-						<button class="border-0 bg-transparent deleteColor"><i class="material-icons align-middle">delete</i></button>
-					</td>
-				</tr>
-				<tr>
-					<td>2020-09-10</td>
-					<td>Sang-Tae</td>
-					<td>Moon</td>
-					<td>1977-02-26</td>
-					<td>Uiryeong-gun</td>
-					<td>
-						<button class="border-0 bg-transparent viewColor"><i class="material-icons align-middle">visibility</i></button>
-						|
-						<button class="border-0 bg-transparent deleteColor"><i class="material-icons align-middle">delete</i></button>
-					</td>
-				</tr>
+				<!-- View Modal -->
+				<div class="modal fade" id="viewModal-{{customer.id}}" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="modal-header p-2 pl-4 bg-primary text-white">
+								<h5 class="modal-title" id="viewModalLabel">View Account</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<i class="material-icons align-middle text-white">close</i>
+								</button>
+							</div>
+							<div class="modal-body pl-4">
+
+								<div class="form-row h6">Date Registered</div>
+								<div class="form-row"><input type="date"class="form-control" name="dateRegField" value="{{customer.dateRegistered|date:'o-m-d'}}" readonly></div>
+
+								<div class="form-row h6 pt-3">First Name</div>
+								<div class="form-row"><input type="text"class="form-control" name="firstName" value="{{customer.firstName}}" required></div>
+
+								<div class="form-row h6 pt-1">
+									<div class="col pl-0">Middle Name</div>
+									<div class="col pr-0">Last Name</div>
+								</div>
+								<div class="form-row">
+									<div class="col pl-0">
+										<input type="text"class="form-control" name="middleName" value="{{customer.middleName}}" required>
+									</div>
+									<div class="col pr-0">
+										<input type="text"class="form-control" name="lastName" value="{{customer.lastName}}" required>
+									</div>
+								</div>
+
+								<div class="form-row h6 pt-4">
+									<div class="col pl-0">Street</div>
+									<div class="col pr-0">Barangay</div>
+								</div>
+								<div class="form-row">
+									<div class="col pl-0">
+										<input type="text"class="form-control" name="street" value="{{customer.street}}" required>
+									</div>
+									<div class="col pr-0">
+										<input type="text"class="form-control" name="barangay" value="{{customer.barangay}}" required>
+									</div>
+								</div>
+
+								<div class="form-row h6 pt-1">
+									<div class="col pl-0">City</div>
+									<div class="col pr-0">Province</div>
+								</div>
+								<div class="form-row">
+									<div class="col pl-0">
+										<input type="text"class="form-control" name="city" value="{{customer.city}}" required>
+									</div>
+									<div class="col pr-0">
+										<input type="text"class="form-control" name="province" value="{{customer.province}}" required>
+									</div>
+								</div>
+
+								<div class="form-row h6 pt-1">
+									<div class="col pl-0">ZIP Code</div>
+									<div class="col pr-0">Country</div>
+								</div>
+								<div class="form-row">
+									<div class="col pl-0">
+										<input type="text"class="form-control" name="zipCode" value="{{customer.zipCode}}" required>
+									</div>
+									<div class="col pr-0">
+										<input type="text"class="form-control" name="country" value="{{customer.country}}" required>
+									</div>
+								</div>
+
+								<div class="form-row h6 pt-4">Birthdate</div>
+								<div class="form-row"><input type="date"class="form-control" name="birthdate" value="{{customer.birthdate|date:'o-m-d'}}" required></div>
+
+								<div class="form-row h6 pt-1">
+									<div class="col pl-0">Status</div>
+									<div class="col pr-0">Gender</div>
+								</div>
+								<div class="form-row">
+									<div class="col pl-0">
+										<select class="form-control" name="status">
+											<option id="Single-{{customer.id}}">Single</option>
+											<option id="Married-{{customer.id}}">Married</option>
+											<option id="Divorced-{{customer.id}}">Divorced</option>
+											<option id="Widow/Widower-{{customer.id}}">Widow/Widower</option>
+											
+										</select>
+									</div>
+									<div class="col pr-0">
+										<div class="form-row greyBorder px-auto">
+											<div class="col">
+												<div class="form-check text-center">
+													<script>
+														var g = "{{customer.gender}}";
+														if(g=="Male") document.write('<input class="form-check-input" type="radio" name="gender-{{customer.id}}" value="Male" checked>');
+														else document.write('<input class="form-check-input" type="radio" name="gender-{{customer.id}}" value="Male">');
+													</script>
+													<label class="form-check-label" for="maleRadio">
+														Male
+													</label>
+												</div>
+											</div>
+											<div class="col mx-auto">
+												<div class="form-check text-center">
+													<script>
+														if(g=="Female") document.write('<input class="form-check-input" type="radio" name="gender-{{customer.id}}" value="Female" checked>');
+														else document.write('<input class="form-check-input" type="radio" name="gender-{{customer.id}}" value="Female">');
+													</script>
+													<label class="form-check-label" for="femaleRadio">
+														Female
+													</label>
+												</div>
+											</div>
+											
+										</div>
+									</div>
+									<script>
+										var att = document.createAttribute("selected");
+										att.value = "";
+										document.getElementById("{{customer.status}}-{{customer.id}}").setAttributeNode(att);
+									</script>
+								</div>
+
+								<div class="form-row h6 pt-4">Spouse's Name</div>
+								<div class="form-row"><input type="text"class="form-control" name="spouseName" value="{{customer.spouseName}}" required></div>
+
+								<div class="form-row h6 pt-1">
+									<div class="col pl-0">Spouse's Occupation</div>
+									<div class="col pr-0">No. of Children</div>
+								</div>
+								<div class="form-row">
+									<div class="col pl-0">
+										<input type="text"class="form-control" name="spouseOccupation" value="{{customer.spouseOccupation}}" required>
+									</div>
+									<div class="col pr-0">
+										<input type="number"class="form-control" name="childrenNum" value="{{customer.childrenNum}}" required>
+									</div>
+								</div>
+
+								<div class="form-row h6 pt-4">
+									<div class="col pl-0">Mother's Name</div>
+									<div class="col pr-0">Mother's Occupation</div>
+								</div>
+								<div class="form-row">
+									<div class="col pl-0">
+										<input type="text"class="form-control" name="motherName" value="{{customer.motherName}}" required>
+									</div>
+									<div class="col pr-0">
+										<input type="text"class="form-control" name="motherOccupation" value="{{customer.motherOccupation}}" required>
+									</div>
+								</div>
+
+								<div class="form-row h6 pt-1">
+									<div class="col pl-0">Father's Name</div>
+									<div class="col pr-0">Father's Occupation</div>
+								</div>
+								<div class="form-row">
+									<div class="col pl-0">
+										<input type="text"class="form-control" name="fatherName" value="{{customer.fatherName}}" required>
+									</div>
+									<div class="col pr-0">
+										<input type="text"class="form-control" name="fatherOccupation" value="{{customer.fatherOccupation}}" required>
+									</div>
+								</div>
+
+								<div class="form-row h6 pt-4">
+									<div class="col pl-0">Height(cm)</div>
+									<div class="col pr-0">Weight(kg)</div>
+								</div>
+								<div class="form-row">
+									<div class="col pl-0">
+										<input type="number"class="form-control" name="height" value="{{customer.height}}" required>
+									</div>
+									<div class="col pr-0">
+										<input type="number"class="form-control" name="weight" value="{{customer.weight}}" required>
+									</div>
+								</div>
+
+								<div class="form-row h6 pt-1">Religion</div>
+								<div class="form-row"><input type="text"class="form-control" name="religion" value="{{customer.religion}}" required></div>
+
+							</div>
+							<div class="modal-footer border-top-0">
+								<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Update</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
 			</tbody>
 			<tfoot>
 				<th>Date Registered</th>
@@ -94,7 +262,7 @@
 		</div>
 	</div>
 
-	<!-- View Modal -->
+	<!-- View Modal 
 	<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
@@ -128,7 +296,8 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>-->
+	
 	{% endblock %}
 	
   <!--scripts-->

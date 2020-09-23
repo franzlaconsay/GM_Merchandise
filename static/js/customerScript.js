@@ -21,11 +21,74 @@ $("#stepLinks div").click(function() {
 
 //customer registration form navigation
 $("#personalNext").click(function(){
-    $("#educationalLink").addClass('active').siblings().removeClass('active');
-    var target = "#educationalBackground";
-    $(target).removeAttr('hidden').siblings().attr('hidden','hidden');
-    $("#progress2").css("width","100%");
-    $("html, body").animate({ scrollTop: 0 }, 500);
+    var fields = $("[required]");
+    var isValid = [];
+    isValid.fill(0,0);
+    var letters = /^[A-Za-z ]+$/;
+    var genderValid = false;
+
+    //gender check
+    if ($("#maleRadio").is(':checked')==false && $("#femaleRadio").is(':checked')==false){
+        $("#maleRadio").parent().parent().parent().addClass("redBorder");
+        $(".genderWarn").html('<i class="material-icons align-middle pr-1">error_outline</i>'+"This is a required field.");  
+        genderValid = false;
+    }
+    else{
+        $("#maleRadio").parent().parent().parent().removeClass("redBorder");
+        $(".genderWarn").html("");
+        genderValid  = true;
+    }
+    
+    //required check
+    for(var i=0; i<fields.length; i++){
+        if($(fields[i]).val()=="" || $(fields[i]).val()==null){
+            $(fields[i]).css("border-color","#dc3545");
+            $(fields[i]).siblings().html('<i class="material-icons align-middle pr-1">error_outline</i>'+"This is a required field.");
+            isValid[i]=0;
+        }
+        else{
+            //general if not empty
+            $(fields[i]).css("border-color","#fcd462");
+            $(fields[i]).siblings().html("");
+            isValid[i]=1;
+
+            //text fields
+            if($(fields[i]).attr("type")=="text" && $(fields[i]).attr("name")!="barangay"){
+                if($(fields[i]).val().match(letters)==null){
+                    $(fields[i]).css("border-color","#dc3545");
+                    $(fields[i]).siblings().html('<i class="material-icons align-middle pr-1">error_outline</i>'+"Must contain letters only.");
+                    isValid[i]=0;
+                }
+                else{
+                    $(fields[i]).css("border-color","#fcd462");
+                    $(fields[i]).siblings().html("");
+                    isValid[i]=1;
+                }
+            }
+
+            //zipCode
+            if($(fields[i]).attr("name")=="zipCode"){
+                if($(fields[i]).val().length!=4){
+                    $(fields[i]).css("border-color","#dc3545");
+                    $(fields[i]).siblings().html('<i class="material-icons align-middle pr-1">error_outline</i>'+"Must be 4 digits.");
+                    isValid[i]=0;
+                }
+
+                else{
+                    $(fields[i]).css("border-color","#fcd462");
+                    $(fields[i]).siblings().html("");
+                    isValid[i]=1;
+                }
+            }
+        }
+    }
+    if(isValid.includes(0) || genderValid==false) alert("invalid");
+    else alert("valid");
+    // $("#educationalLink").addClass('active').siblings().removeClass('active');
+    // var target = "#educationalBackground";
+    // $(target).removeAttr('hidden').siblings().attr('hidden','hidden');
+    // $("#progress2").css("width","100%");
+    // $("html, body").animate({ scrollTop: 0 }, 500);
 });
 
 $("#educationalPrevious").click(function(){
@@ -174,7 +237,7 @@ $(".deleteColor").click(function(){
     $("#deleteModal").modal('show');
 });
 
-//show view modal
+/*show view modal
 $(".viewColor").click(function(){
     $("#viewModal").modal('show');
     var viewInfo = $(this).parent().siblings();
@@ -183,4 +246,4 @@ $(".viewColor").click(function(){
     $("[name=lastField]").val($(viewInfo[2]).html());
     $("[name=birthField]").val($(viewInfo[3]).html());
     $("[name=cityField]").val($(viewInfo[4]).html());
-});
+});*/

@@ -7,8 +7,8 @@
   {% endblock %}
 
   {% block content %}
-  <div class="container p-4 pb-5">
-    <div class="row h3">Add New Customer</div>
+  <div class="container px-4 pb-5">
+    <div class="row h3">New Customer Form</div>
     <div class="row text-center mt-4" id="stepLinks">
 
       <div class="col h5 mb-0 active" id="personalLink" href="#personalInfo">
@@ -35,131 +35,183 @@
           <!--Personal information-->
           <div id="personalInfo">
 
-            <div class="form-row h6 pl-3">Name</div>
-            <div class="form-row">
-              <div class="col">
-                <input type="text" class="form-control" name="firstName" placeholder="First Name" >
-              </div>
-              <div class="col">
-                <input type="text" class="form-control" name="middleName" placeholder="Middle Name" >
-              </div>
-              <div class="col">
-                <input type="text" class="form-control" name="lastName" placeholder="Last Name" >
-              </div>
-            </div>
-
-            <div class="form-row h6 pl-3 pt-3">Address</div>
-            <div class="form-row">
-              <div class="col">
-                <input type="text" class="form-control" name="street" placeholder="Street" >
-              </div>
-              <div class="col">
-                <input type="text" class="form-control" name="barangay" placeholder="Barangay" >
-              </div>
-              <div class="col">
-                <input type="text" class="form-control" name="city" placeholder="City" >
-              </div>
-            </div>
-             <div class="form-row pt-2">
-              <div class="col">
-                <input type="text" class="form-control" name="province" placeholder="Province" >
-              </div>
-              <div class="col">
-                <input type="text" class="form-control" name="zipCode" placeholder="ZIP Code" >
-              </div>
-              <div class="col">
-                <input type="text" class="form-control" name="country" placeholder="Country" >
-              </div>
-            </div>
-
+            <span class="text-danger">* Required</span>
             <div class="form-row h6 pl-2 pt-3">
-              <div class="col">Birthdate</div>
-              <div class="col">Status</div>
-              <div class="col">Gender</div>
+              <div class="col">First Name<span class="text-danger">&nbsp;*</span></div>
+              <div class="col">Middle Name</div>
+              <div class="col">Last Name<span class="text-danger">&nbsp;*</span></div>
             </div>
             <div class="form-row">
               <div class="col">
-                <input type="date" name="birthdate" class="form-control">
+                <input type="text" class="form-control" name="firstName" maxlength="50" value required>
+                <span class="text-danger"></span>
               </div>
               <div class="col">
-                <select class="form-control" name="status">
-                  <option>Single</option>
-                  <option>Married</option>
-                  <option>Divorced</option>
-                  <option>Widow/Widower</option>
+                <input type="text" class="form-control" name="middleName" maxlength="50">
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" name="lastName" maxlength="50" value required>
+                <span class="text-danger"></span>
+              </div>
+            </div>
+
+            <div class="form-row h6 pl-2 pt-4">
+              <div class="col">Street</div>
+              <div class="col">Barangay<span class="text-danger">&nbsp;*</span></div>
+              <div class="col">City<span class="text-danger">&nbsp;*</span></div>
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <input type="text" class="form-control" name="street" maxlength="50">
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" name="barangay" maxlength="50" value required>
+                <span class="text-danger"></span>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" name="city" maxlength="50" value required>
+                <span class="text-danger"></span>
+              </div>
+            </div>
+            <div class="form-row h6 pl-2 pt-2">
+              <div class="col">Province<span class="text-danger">&nbsp;*</span></div>
+              <div class="col">Zip Code<span class="text-danger">&nbsp;*</span></div>
+              <div class="col">Country<span class="text-danger">&nbsp;*</span></div>
+            </div>
+             <div class="form-row">
+              <div class="col">
+                <input type="text" class="form-control" name="province" maxlength="50" value required>
+                <span class="text-danger"></span>
+              </div>
+              <div class="col">
+                <input type="number" class="form-control" name="zipCode" min="0" oninput="if (parseInt(this.value) > 9999) {
+                  this.value = parseInt(this.value/10); }" onkeydown="if(event.key==='.'||event.key==='-'){event.preventDefault();}" value required>
+                <span class="text-danger"></span>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" name="country" maxlength="50" value required>
+                <span class="text-danger"></span>
+              </div>
+            </div>
+
+            <div class="form-row h6 pl-2 pt-4">
+              <div class="col">Birthdate<span class="text-danger">&nbsp;*</span></div>
+              <div class="col">Status<span class="text-danger">&nbsp;*</span></div>
+              <div class="col">Gender<span class="text-danger">&nbsp;*</span></div>
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <input type="date" name="birthdate" class="form-control" value required>
+                <span class="text-danger"></span>
+              </div>
+              <div class="col">
+                <select class="form-control" name="status" required>
+                  <option disabled selected> -- Select an option -- </option>
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Divorced">Divorced</option>
+                  <option value="Widow/Widower">Widow/Widower</option>
                 </select>
+                <span class="text-danger"></span>
               </div>
-              <div class="col">
+              <div class="col text-center"><!--
                 <select class="form-control" name="gender">
                   <option>Male</option>
                   <option>Female</option>
-                </select>
+                </select>-->
+                <div class="form-row yellowBorder">
+                  <div class="col my-auto">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gender" id="maleRadio" value="Male">
+                      <label class="form-check-label" for="maleRadio">
+                        Male
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col my-auto">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gender" id="femaleRadio" value="Female">
+                      <label class="form-check-label" for="femaleRadio">
+                        Female
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <span class="text-danger genderWarn d-flex flex-fill" style="padding-top: 1.5px;"></span>
               </div>
+              
             </div>
 
             <div class="form-row h6 pl-2 pt-3">
-               <div class="col-6">Spouse</div>
-               <div class="col-4"></div>
+               <div class="col-6">Spouse's Name</div>
+               <div class="col-4">Spouse's Occupation</div>
                <div class="col-2">No. of Children</div>
             </div>
             <div class="form-row">
               <div class="col-6">
-                <input type="text" class="form-control" name="spouseName" placeholder="Spouse's Name" >
+                <input type="text" class="form-control" name="spouseName" maxlength="50" >
               </div>
               <div class="col-4">
-                <input type="text" class="form-control" name="spouseOccupation" placeholder="Spouse's Occupation" >
+                <input type="text" class="form-control" name="spouseOccupation" maxlength="50" >
               </div>
               <div class="col-2">
-                <input type="number" class="form-control" name="childrenNum" placeholder="0" >
+                <input type="number" class="form-control" name="childrenNum" min=0 value="0" oninput="this.value = parseInt(this.value); if (parseInt(this.value) > 99) {
+                  this.value = parseInt(this.value/10); }" onkeydown="if(event.key==='.'||event.key==='-'){event.preventDefault();}">
               </div>
             </div>
 
             <div class="form-row h6 pl-2 pt-3">
-               <div class="col">Mother</div>
-               <div class="col"></div>
+               <div class="col">Mother's Name<span class="text-danger">&nbsp;*</span></div>
+               <div class="col">Mother's Occupation</div>
             </div>
             <div class="form-row">
               <div class="col">
-                <input type="text" class="form-control" name="motherName" placeholder="Mother's Name" >
+                <input type="text" class="form-control" name="motherName" maxlength="50" value required>
+                <span class="text-danger"></span>
               </div>
               <div class="col">
-                <input type="text" class="form-control" name="motherOccupation" placeholder="Mother's Occupation" >
+                <input type="text" class="form-control" name="motherOccupation" maxlength="50" >
               </div>
             </div>
 
             <div class="form-row h6 pl-2 pt-3">
-               <div class="col">Father</div>
-               <div class="col"></div>
+               <div class="col">Father's Name<span class="text-danger">&nbsp;*</span></div>
+               <div class="col">Father's Occupation</div>
             </div>
             <div class="form-row">
               <div class="col">
-                <input type="text" class="form-control" name="fatherName" placeholder="Father's Name" >
+                <input type="text" class="form-control" name="fatherName" maxlength="50" value required>
+                <span class="text-danger"></span>
               </div>
               <div class="col">
-                <input type="text" class="form-control" name="fatherOccupation" placeholder="Father's Occupation" >
+                <input type="text" class="form-control" name="fatherOccupation" maxlength="50" >
               </div>
             </div>
 
             <div class="form-row h6 pl-2 pt-3">
-                <div class="col-3">Height(cm)</div>
-                 <div class="col-3">Weight(kg)</div>
+                <div class="col-3">Height(cm)<span class="text-danger">&nbsp;*</span></div>
+                 <div class="col-3">Weight(kg)<span class="text-danger">&nbsp;*</span></div>
                  <div class="col-6">Religion</div>
             </div>
             <div class="form-row">
               <div class="col-3">
-                <input type="number" class="form-control" name="height" placeholder="0" >
+                <input type="number" class="form-control" name="height" min="0" oninput="this.value = parseFloat(this.value); if (parseInt(this.value) > 999) {
+                  this.value = parseInt(this.value/10); }" onkeydown="if(event.key==='-'){event.preventDefault();}" value required>
+                <span class="text-danger"></span>
               </div>
               <div class="col-3">
-                <input type="number" class="form-control" name="weight" placeholder="0" >
+                <input type="number" class="form-control" name="weight" min="0" oninput="this.value = parseFloat(this.value); if (parseInt(this.value) > 999) {
+                  this.value = parseInt(this.value/10); }" onkeydown="if(event.key==='-'){event.preventDefault();}" value required>
+                <span class="text-danger"></span>
               </div>
               <div class="col-6">
-                <input type="text" class="form-control" name="religion" placeholder="Religion" >
+                <input type="text" class="form-control" name="religion" maxlength="50" >
               </div>
             </div>
             
             <div class="form-row h6 pl-3 pt-3">Profile Picture</div>
             <div class="form-row pl-2 align-items-end">
-              <div class="picBox"><img src="{% static 'images/img1.jpg' %}" class="picBoxImage" id="profDisplay"></div>
+              <div class="picBox"><img src="{% static 'images/avatar.png' %}" class="picBoxImage" id="profDisplay"></div>
               <label for="profpic" class="profpic-upload ml-2 mb-0">
                 <i class="material-icons align-middle">add_photo_alternate</i>
                 Choose File

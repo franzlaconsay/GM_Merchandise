@@ -6,7 +6,11 @@ from .models import *
 
 class SummaryView(View):
   def get(self,request):
-    return render(request, 'customer/customerSummary.html')
+    qsCustomers = Customer.objects.all()
+    context = {
+      'customers' : qsCustomers
+    }
+    return render(request, 'customer/customerSummary.html', context)
 
 class RegistrationView(View):
   def get(self,request):
