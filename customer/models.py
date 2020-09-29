@@ -14,7 +14,7 @@ class Person(models.Model):
   zipCode = models.IntegerField()
   country = models.CharField(max_length = 50)
   birthdate = models.DateField()
-  status = models.CharField(max_length = 10)
+  status = models.CharField(max_length = 15)
   gender = models.CharField(max_length = 10)
   spouseName = models.CharField(max_length = 50)
   spouseOccupation = models.CharField(max_length = 50)
@@ -32,7 +32,7 @@ class Person(models.Model):
 
 class Customer(Person):
   dateRegistered = models.DateField(default=datetime.date.today)
-  profilePic = models.ImageField(null=True, blank=True,)
+  profilePic = models.ImageField(null=True)
 
   class Meta:
     db_table = "Customer"

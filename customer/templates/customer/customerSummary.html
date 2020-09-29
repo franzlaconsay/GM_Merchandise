@@ -50,18 +50,25 @@
 									<i class="material-icons align-middle text-white">close</i>
 								</button>
 							</div>
+							<form id="updateForm" method="POST" enctype="multipart/form-data">
+							{% csrf_token %}
 							<div class="modal-body pl-4">
 
+								<input type="text" name="customerID" value="{{customer.id}}" hidden>
 								<div class="form-row">
-									{% if customer.profilePic != None %}
-									<div class="picBox2 mx-auto"><img src="../static/images/{{customer.profilePic}}" class="picBoxImage"></div>
-									{% else %}
-									<div class="picBox2 mx-auto"><img src="{% static 'images/avatar.png' %}" class="picBoxImage"></div>
-									{% endif %}
+									<div class="mx-auto"><img src="../static/images/{{customer.profilePic}}" id="profDisplay-{{customer.id}}" class="picBoxImage"></div>
+								</div>
+								<div class="form-row pt-1">
+									<label for="profpicUpdate-{{customer.id}}" class="profpic-upload2 mx-auto">
+										<i class="material-icons align-middle">add_photo_alternate</i>
+										Choose File
+									</label>
+									<input type="text" name="oldProfile" value="{{customer.profilePic}}" hidden>
+									<input type="file" id="profpicUpdate-{{customer.id}}" name="profilePic" cid="{{customer.id}}" accept="image/*" onchange="readURL2(this);" hidden>
 								</div>
 
-								<div class="form-row h6 pt-4">Date Registered</div>
-								<div class="form-row"><input type="date"class="form-control" name="dateRegField" value="{{customer.dateRegistered|date:'o-m-d'}}" readonly></div>
+								<div class="form-row h6 pt-2">Date Registered</div>
+								<div class="form-row"><input type="date"class="form-control" name="dateReg" value="{{customer.dateRegistered|date:'o-m-d'}}" readonly></div>
 
 								<div class="form-row h6 pt-3">First Name</div>
 								<div class="form-row"><input type="text"class="form-control" name="firstName" value="{{customer.firstName}}" required></div>
@@ -72,7 +79,7 @@
 								</div>
 								<div class="form-row">
 									<div class="col pl-0">
-										<input type="text"class="form-control" name="middleName" value="{{customer.middleName}}" required>
+										<input type="text"class="form-control" name="middleName" value="{{customer.middleName}}">
 									</div>
 									<div class="col pr-0">
 										<input type="text"class="form-control" name="lastName" value="{{customer.lastName}}" required>
@@ -85,7 +92,7 @@
 								</div>
 								<div class="form-row">
 									<div class="col pl-0">
-										<input type="text"class="form-control" name="street" value="{{customer.street}}" required>
+										<input type="text"class="form-control" name="street" value="{{customer.street}}">
 									</div>
 									<div class="col pr-0">
 										<input type="text"class="form-control" name="barangay" value="{{customer.barangay}}" required>
@@ -127,11 +134,11 @@
 								</div>
 								<div class="form-row">
 									<div class="col pl-0">
-										<select class="form-control" name="status">
+										<select class="form-control" name="status" required>
 											<option id="Single-{{customer.id}}">Single</option>
 											<option id="Married-{{customer.id}}">Married</option>
 											<option id="Divorced-{{customer.id}}">Divorced</option>
-											<option id="Widow/Wido-{{customer.id}}">Widow/Widower</option>
+											<option id="Widow/Widower-{{customer.id}}">Widow/Widower</option>
 											<script>
 												var att = document.createAttribute("selected");
 												att.value = "";
@@ -171,7 +178,7 @@
 								</div>
 
 								<div class="form-row h6 pt-4">Spouse's Name</div>
-								<div class="form-row"><input type="text"class="form-control" name="spouseName" value="{{customer.spouseName}}" required></div>
+								<div class="form-row"><input type="text"class="form-control" name="spouseName" value="{{customer.spouseName}}"></div>
 
 								<div class="form-row h6 pt-1">
 									<div class="col pl-0">Spouse's Occupation</div>
@@ -179,10 +186,10 @@
 								</div>
 								<div class="form-row">
 									<div class="col pl-0">
-										<input type="text"class="form-control" name="spouseOccupation" value="{{customer.spouseOccupation}}" required>
+										<input type="text"class="form-control" name="spouseOccupation" value="{{customer.spouseOccupation}}">
 									</div>
 									<div class="col pr-0">
-										<input type="number"class="form-control" name="childrenNum" value="{{customer.childrenNum}}" required>
+										<input type="number"class="form-control" name="childrenNum" value="{{customer.childrenNum}}">
 									</div>
 								</div>
 
@@ -195,7 +202,7 @@
 										<input type="text"class="form-control" name="motherName" value="{{customer.motherName}}" required>
 									</div>
 									<div class="col pr-0">
-										<input type="text"class="form-control" name="motherOccupation" value="{{customer.motherOccupation}}" required>
+										<input type="text"class="form-control" name="motherOccupation" value="{{customer.motherOccupation}}">
 									</div>
 								</div>
 
@@ -208,7 +215,7 @@
 										<input type="text"class="form-control" name="fatherName" value="{{customer.fatherName}}" required>
 									</div>
 									<div class="col pr-0">
-										<input type="text"class="form-control" name="fatherOccupation" value="{{customer.fatherOccupation}}" required>
+										<input type="text"class="form-control" name="fatherOccupation" value="{{customer.fatherOccupation}}">
 									</div>
 								</div>
 
@@ -226,13 +233,16 @@
 								</div>
 
 								<div class="form-row h6 pt-1">Religion</div>
-								<div class="form-row"><input type="text"class="form-control" name="religion" value="{{customer.religion}}" required></div>
+								<div class="form-row"><input type="text"class="form-control" name="religion" value="{{customer.religion}}"></div>
 
 							</div>
 							<div class="modal-footer border-top-0">
 								<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Update</button>
+								<button type="submit" name="btnUpdate" class="btn btn-primary">Update</button>
 							</div>
+
+							</form>
+
 						</div>
 					</div>
 				</div>

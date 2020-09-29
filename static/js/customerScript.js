@@ -180,6 +180,21 @@ function readURL(input) {
     }
 }
 
+function readURL2(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var cid = $(input).attr("cid");
+            var box = '#profDisplay-'+cid;
+            //alert($(input).attr("cid"));
+            $(box)
+                .attr('src', e.target.result)
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 //loadTable
 $(document).ready(function(){
     var table = $('#customerDataTable').DataTable({
