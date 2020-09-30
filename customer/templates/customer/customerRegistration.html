@@ -85,7 +85,7 @@
               </div>
               <div class="col">
                 <input type="number" class="form-control" name="zipCode" min="0" oninput="if (parseInt(this.value) > 9999) {
-                  this.value = parseInt(this.value/10); }" onkeydown="if(event.key==='.'||event.key==='-'){event.preventDefault();}" value required>
+                  this.value = parseInt(this.value/10); }" onkeydown="if(event.key==='.'||event.key==='-'||event.key==='+'||event.key==='e'||event.key==='E'){event.preventDefault();}" value required>
                 <span class="text-danger"></span>
               </div>
               <div class="col">
@@ -216,7 +216,7 @@
                 <i class="material-icons align-middle">add_photo_alternate</i>
                 Choose File
               </label>
-              <input type="file" id="profpic" name="profilePic" accept="image/*" onchange="readURL2(this);" hidden>
+              <input type="file" id="profpic" name="profilePic" accept="image/*" onchange="readURL(this);" hidden>
             </div>
 
             <div class="form-row h6 pl-2 pt-5">

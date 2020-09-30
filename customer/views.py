@@ -3,6 +3,9 @@ from django.views.generic import View, TemplateView
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import CustomerForm
 from .models import *
+from django.conf import settings
+from django.conf.urls.static import static
+import os
 
 class SummaryView(View):
   def get(self,request):
@@ -40,41 +43,26 @@ class SummaryView(View):
         weight = request.POST.get("weight")
         religion = request.POST.get("religion")
         profilePic = request.FILES.get("profilePic")
-        print(profilePic)
-        # update_customer = Customer.objects.filter(person_ptr_id = customerID).update(firstName = firstName, middleName = middleName, lastName = lastName,
-        #             street = street, barangay = barangay, city = city,
-        #             province = province, zipCode = zipCode, country = country,
-        #             birthdate = birthdate, status = status, gender = gender,
-        #             spouseName = spouseName, spouseOccupation = spouseOccupation, childrenNum = childrenNum,
-        #             motherName = motherName, motherOccupation = motherOccupation,
-        #             fatherName  = fatherName, fatherOccupation = fatherOccupation,
-        #             height = height, weight = weight, religion = religion, profilePic = profilePic)
-        update_customer = Customer.objects.get(person_ptr_id = customerID)
-        update_customer.firstName = firstName
-        update_customer.middleName = middleName
-        update_customer.lastName = lastName
-        update_customer.street = street
-        update_customer.barangay = barangay
-        update_customer.city = city
-        update_customer.province = province
-        update_customer.zipCode = zipCode
-        update_customer.country = country
-        update_customer.birthdate = birthdate
-        update_customer.status = status
-        update_customer.gender = gender
-        update_customer.spouseName = spouseName
-        update_customer.spouseOccupation = spouseOccupation
-        update_customer.childrenNum = childrenNum
-        update_customer.motherName = motherName
-        update_customer.motherOccupation = motherOccupation
-        update_customer.fatherName  = fatherName
-        update_customer.fatherOccupation = fatherOccupation
-        update_customer.height = height
-        update_customer.weight = weight
-        update_customer.religion = religion
-        update_customer.profilePic = profilePic
-        update_customer.save()
-        return HttpResponseRedirect('summary')
+        Customer.objects.filter(person_ptr_id = customerID).update(firstName = firstName, middleName = middleName, lastName = lastName,
+                    street = street, barangay = barangay, city = city,
+                    province = province, zipCode = zipCode, country = country,
+                    birthdate = birthdate, status = status, gender = gender,
+                    spouseName = spouseName, spouseOccupation = spouseOccupation, childrenNum = childrenNum,
+                    motherName = motherName, motherOccupation = motherOccupation,
+                    fatherName  = fatherName, fatherOccupation = fatherOccupation,
+                    height = height, weight = weight, religion = religion)
+        if profilePic is not None:
+          os.remove(settings.MEDIA_ROOT+"/"+oldProfile)
+          update_customerPic = Customer.objects.get(person_ptr_id = customerID)
+          update_customerPic.profilePic = profilePic
+          update_customerPic.save()
+      elif 'btnDelete' in request.POST:
+        customerID = request.POST.get("customerID")
+        oldProfile = request.POST.get("oldProfile")
+        os.remove(settings.MEDIA_ROOT+"/"+oldProfile)
+        Customer.objects.filter(person_ptr_id = customerID).delete()
+        Person.objects.filter(id = customerID).delete()
+      return HttpResponseRedirect('summary')
 
 class RegistrationView(View):
   def get(self,request):
@@ -107,7 +95,6 @@ class RegistrationView(View):
     profilePic = request.FILES.get("profilePic")
     if(profilePic is None):
       profilePic="avatar.png"
-    print(profilePic)
     form = Customer(firstName = firstName, middleName = middleName, lastName = lastName,
                     street = street, barangay = barangay, city = city,
                     province = province, zipCode = zipCode, country = country,

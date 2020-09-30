@@ -11,7 +11,7 @@ class Person(models.Model):
   barangay = models.CharField(max_length = 50)
   city = models.CharField(max_length = 50)
   province = models.CharField(max_length = 50)
-  zipCode = models.IntegerField()
+  zipCode = models.CharField(max_length = 4)
   country = models.CharField(max_length = 50)
   birthdate = models.DateField()
   status = models.CharField(max_length = 15)

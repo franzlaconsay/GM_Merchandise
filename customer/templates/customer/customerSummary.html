@@ -37,7 +37,7 @@
 						<button class="border-0 bg-transparent viewColor" data-toggle="modal" data-target="#viewModal-{{customer.id}}">
 							<i class="material-icons align-middle">visibility</i></button>
 						|
-						<button class="border-0 bg-transparent deleteColor"><i class="material-icons align-middle">delete</i></button>
+						<button class="border-0 bg-transparent deleteColor" data-toggle="modal" data-target="#deleteModal-{{customer.id}}"><i class="material-icons align-middle">delete</i></button>
 					</td>
 				</tr>
 				<!-- View Modal -->
@@ -71,7 +71,8 @@
 								<div class="form-row"><input type="date"class="form-control" name="dateReg" value="{{customer.dateRegistered|date:'o-m-d'}}" readonly></div>
 
 								<div class="form-row h6 pt-3">First Name</div>
-								<div class="form-row"><input type="text"class="form-control" name="firstName" value="{{customer.firstName}}" required></div>
+								<div class="form-row"><input type="text"class="form-control" name="firstName" value="{{customer.firstName}}" maxlength="50" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+									oninput="this.setCustomValidity('')" required></div>
 
 								<div class="form-row h6 pt-1">
 									<div class="col pl-0">Middle Name</div>
@@ -79,10 +80,12 @@
 								</div>
 								<div class="form-row">
 									<div class="col pl-0">
-										<input type="text"class="form-control" name="middleName" value="{{customer.middleName}}">
+										<input type="text"class="form-control" name="middleName" value="{{customer.middleName}}" maxlength="50" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+										oninput="this.setCustomValidity('')">
 									</div>
 									<div class="col pr-0">
-										<input type="text"class="form-control" name="lastName" value="{{customer.lastName}}" required>
+										<input type="text"class="form-control" name="lastName" value="{{customer.lastName}}" maxlength="50" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+										oninput="this.setCustomValidity('')" required>
 									</div>
 								</div>
 
@@ -92,10 +95,12 @@
 								</div>
 								<div class="form-row">
 									<div class="col pl-0">
-										<input type="text"class="form-control" name="street" value="{{customer.street}}">
+										<input type="text"class="form-control" name="street" value="{{customer.street}}" maxlength="50" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+										oninput="this.setCustomValidity('')">
 									</div>
 									<div class="col pr-0">
-										<input type="text"class="form-control" name="barangay" value="{{customer.barangay}}" required>
+										<input type="text"class="form-control" name="barangay" value="{{customer.barangay}}" required maxlength="50" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+										oninput="this.setCustomValidity('')">
 									</div>
 								</div>
 
@@ -105,10 +110,12 @@
 								</div>
 								<div class="form-row">
 									<div class="col pl-0">
-										<input type="text"class="form-control" name="city" value="{{customer.city}}" required>
+										<input type="text"class="form-control" name="city" value="{{customer.city}}" maxlength="50" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+										oninput="this.setCustomValidity('')" required>
 									</div>
 									<div class="col pr-0">
-										<input type="text"class="form-control" name="province" value="{{customer.province}}" required>
+										<input type="text"class="form-control" name="province" value="{{customer.province}}" maxlength="50" pattern="[a-zA-Z-]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+										oninput="this.setCustomValidity('')" required>
 									</div>
 								</div>
 
@@ -118,10 +125,12 @@
 								</div>
 								<div class="form-row">
 									<div class="col pl-0">
-										<input type="text"class="form-control" name="zipCode" value="{{customer.zipCode}}" required>
+										<input type="text" class="form-control" name="zipCode" value="{{customer.zipCode}}" pattern="^[0-9]{3,4}$"  onkeydown="if(event.key==='.'||event.key==='-'){event.preventDefault();}" oninvalid="this.setCustomValidity('Must be 3-4 digits.')"
+										oninput="this.setCustomValidity('')" required>
 									</div>
 									<div class="col pr-0">
-										<input type="text"class="form-control" name="country" value="{{customer.country}}" required>
+										<input type="text"class="form-control" name="country" value="{{customer.country}}" maxlength="50" pattern="[a-zA-Z-]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+										oninput="this.setCustomValidity('')" required>
 									</div>
 								</div>
 
@@ -178,7 +187,8 @@
 								</div>
 
 								<div class="form-row h6 pt-4">Spouse's Name</div>
-								<div class="form-row"><input type="text"class="form-control" name="spouseName" value="{{customer.spouseName}}"></div>
+								<div class="form-row"><input type="text"class="form-control" name="spouseName" value="{{customer.spouseName}}" maxlength="50" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+									oninput="this.setCustomValidity('')"></div>
 
 								<div class="form-row h6 pt-1">
 									<div class="col pl-0">Spouse's Occupation</div>
@@ -186,10 +196,12 @@
 								</div>
 								<div class="form-row">
 									<div class="col pl-0">
-										<input type="text"class="form-control" name="spouseOccupation" value="{{customer.spouseOccupation}}">
+										<input type="text"class="form-control" name="spouseOccupation" value="{{customer.spouseOccupation}}" maxlength="50" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+										oninput="this.setCustomValidity('')">
 									</div>
 									<div class="col pr-0">
-										<input type="number"class="form-control" name="childrenNum" value="{{customer.childrenNum}}">
+										<input type="number"class="form-control" name="childrenNum" value="{{customer.childrenNum}}" min=0 oninput="this.value = parseInt(this.value); if (parseInt(this.value) > 99) {
+											this.value = parseInt(this.value/10); }" onkeydown="if(event.key==='.'||event.key==='-'){event.preventDefault();}">
 									</div>
 								</div>
 
@@ -199,10 +211,12 @@
 								</div>
 								<div class="form-row">
 									<div class="col pl-0">
-										<input type="text"class="form-control" name="motherName" value="{{customer.motherName}}" required>
+										<input type="text"class="form-control" name="motherName" value="{{customer.motherName}}" maxlength="50" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+										oninput="this.setCustomValidity('')" required>
 									</div>
 									<div class="col pr-0">
-										<input type="text"class="form-control" name="motherOccupation" value="{{customer.motherOccupation}}">
+										<input type="text"class="form-control" name="motherOccupation" value="{{customer.motherOccupation}}" maxlength="50" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+										oninput="this.setCustomValidity('')">
 									</div>
 								</div>
 
@@ -212,10 +226,12 @@
 								</div>
 								<div class="form-row">
 									<div class="col pl-0">
-										<input type="text"class="form-control" name="fatherName" value="{{customer.fatherName}}" required>
+										<input type="text"class="form-control" name="fatherName" value="{{customer.fatherName}}" maxlength="50" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+										oninput="this.setCustomValidity('')" required>
 									</div>
 									<div class="col pr-0">
-										<input type="text"class="form-control" name="fatherOccupation" value="{{customer.fatherOccupation}}">
+										<input type="text"class="form-control" name="fatherOccupation" value="{{customer.fatherOccupation}}" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+										oninput="this.setCustomValidity('')" maxlength="50">
 									</div>
 								</div>
 
@@ -225,15 +241,18 @@
 								</div>
 								<div class="form-row">
 									<div class="col pl-0">
-										<input type="number"class="form-control" name="height" value="{{customer.height}}" required>
+										<input type="number"class="form-control" name="height" value="{{customer.height}}" min="0" oninput="this.value = parseFloat(this.value); if (parseInt(this.value) > 999) {
+											this.value = parseInt(this.value/10); }" onkeydown="if(event.key==='-'){event.preventDefault();}" required>
 									</div>
 									<div class="col pr-0">
-										<input type="number"class="form-control" name="weight" value="{{customer.weight}}" required>
+										<input type="number"class="form-control" name="weight" value="{{customer.weight}}" min="0" oninput="this.value = parseFloat(this.value); if (parseInt(this.value) > 999) {
+											this.value = parseInt(this.value/10); }" onkeydown="if(event.key==='-'){event.preventDefault();}" required>
 									</div>
 								</div>
 
 								<div class="form-row h6 pt-1">Religion</div>
-								<div class="form-row"><input type="text"class="form-control" name="religion" value="{{customer.religion}}"></div>
+								<div class="form-row"><input type="text"class="form-control" name="religion" value="{{customer.religion}}" maxlength="50" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
+									oninput="this.setCustomValidity('')"></div>
 
 							</div>
 							<div class="modal-footer border-top-0">
@@ -243,6 +262,31 @@
 
 							</form>
 
+						</div>
+					</div>
+				</div>
+				<!-- Delete Modal -->
+				<div class="modal fade" id="deleteModal-{{customer.id}}" abindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header p-2 pl-4 bg-danger text-white">
+								<h5 class="modal-title" id="deleteModalLabel">Delete Account</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<i class="material-icons align-middle text-white">close</i>
+								</button>
+							</div>
+							<form id="deleteForm" method="post">
+								{% csrf_token %}
+								<div class="modal-body pl-4">
+									<input type="text" name="customerID" value="{{customer.id}}" hidden>
+									<input type="text" name="oldProfile" value="{{customer.profilePic}}" hidden>
+									<i class="material-icons align-middle text-danger">warning</i> Are you sure you want to delete <span class="text-danger font-weight-bold">{{customer.lastName}}, {{customer.firstName}}</span>'s account?
+								</div>
+								<div class="modal-footer border-top-0">
+									<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+									<button type="submit" name="btnDelete" class="btn btn-danger">Delete</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -259,7 +303,7 @@
 		</table>
 	</div>
 
-	<!-- Delete Modal -->
+	<!-- Delete Modal
 	<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
@@ -278,7 +322,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>-->
 
 	<!-- View Modal 
 	<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
