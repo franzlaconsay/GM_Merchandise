@@ -128,6 +128,28 @@
   height: 40px;
 }
 
+.profpic-upload:hover{
+  background-color: #fcd462;
+  color: white;
+}
+
+.profpic-upload2 {
+  border: 1px solid #CED4DA;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 10px;
+  color: #868686;
+  width: 140px;
+  height: 40px;
+}
+
+.profpic-upload2:hover{
+  background-color: #868686;
+  color: white;
+  border-color: #868686;
+}
+
 .picBox {
   width: 200px;
   height: 200px;

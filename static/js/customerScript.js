@@ -39,12 +39,16 @@ $("#personalNext").click(function(){
         genderValid  = true;
     }
     
+    var scrollTarget = [];
+    var targetIndex = 0;
     //required check
     for(var i=0; i<fields.length; i++){
         if($(fields[i]).val()=="" || $(fields[i]).val()==null){
             $(fields[i]).css("border-color","#dc3545");
             $(fields[i]).siblings().html('<i class="material-icons align-middle pr-1">error_outline</i>'+"This is a required field.");
             isValid[i]=0;
+            scrollTarget[targetIndex++] = $(fields[i]).attr("name");
+            //
         }
         else{
             //general if not empty
@@ -58,6 +62,7 @@ $("#personalNext").click(function(){
                     $(fields[i]).css("border-color","#dc3545");
                     $(fields[i]).siblings().html('<i class="material-icons align-middle pr-1">error_outline</i>'+"Must contain letters only.");
                     isValid[i]=0;
+                    scrollTarget[targetIndex++] = $(fields[i]).attr("name");
                 }
                 else{
                     $(fields[i]).css("border-color","#fcd462");
@@ -68,10 +73,11 @@ $("#personalNext").click(function(){
 
             //zipCode
             if($(fields[i]).attr("name")=="zipCode"){
-                if($(fields[i]).val().length!=4){
+                if($(fields[i]).val().length<3 || $(fields[i]).val().length>4){
                     $(fields[i]).css("border-color","#dc3545");
-                    $(fields[i]).siblings().html('<i class="material-icons align-middle pr-1">error_outline</i>'+"Must be 4 digits.");
+                    $(fields[i]).siblings().html('<i class="material-icons align-middle pr-1">error_outline</i>'+"Must be 3-4 digits.");
                     isValid[i]=0;
+                    scrollTarget[targetIndex++] = $(fields[i]).attr("name");
                 }
 
                 else{
@@ -82,13 +88,21 @@ $("#personalNext").click(function(){
             }
         }
     }
-    if(isValid.includes(0) || genderValid==false) alert("invalid");
-    else alert("valid");
-    // $("#educationalLink").addClass('active').siblings().removeClass('active');
-    // var target = "#educationalBackground";
-    // $(target).removeAttr('hidden').siblings().attr('hidden','hidden');
-    // $("#progress2").css("width","100%");
-    // $("html, body").animate({ scrollTop: 0 }, 500);
+    if(isValid.includes(0) || genderValid==false){
+        if(scrollTarget[0]!=null)
+            $('html,body').animate({scrollTop : $('input[name ='+scrollTarget[0]+']').offset().top -100},800);
+        //alert(scrollTarget[0]);
+        else
+            $('html,body').animate({scrollTop : $('input[name=gender]').offset().top -100},800);
+        targetIndex = 0;
+    }
+    else{
+        $("#educationalLink").addClass('active').siblings().removeClass('active');
+        var target = "#educationalBackground";
+        $(target).removeAttr('hidden').siblings().attr('hidden','hidden');
+        $("#progress2").css("width","100%");
+        $("html, body").animate({ scrollTop: 0 }, 500);
+    }
 });
 
 $("#educationalPrevious").click(function(){
@@ -173,6 +187,21 @@ function readURL(input) {
 
         reader.onload = function (e) {
             $('#profDisplay')
+                .attr('src', e.target.result)
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function readURL2(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var cid = $(input).attr("cid");
+            var box = '#profDisplay-'+cid;
+            //alert($(input).attr("cid"));
+            $(box)
                 .attr('src', e.target.result)
         };
         reader.readAsDataURL(input.files[0]);
