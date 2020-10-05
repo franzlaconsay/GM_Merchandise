@@ -27,7 +27,7 @@
 			<tbody>
 				{% for customer in customers %}
 				<tr>
-					<td>{{customer.dateRegistered}}</td>
+					<td>{{customer.dateRegistered|date:'o-m-d'}}</td>
 					<td>{{customer.firstName}}</td>
 					<td>{{customer.lastName}}</td>
 					<td>{{customer.birthdate}}</td>

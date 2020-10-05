@@ -52,16 +52,18 @@ class SummaryView(View):
                     fatherName  = fatherName, fatherOccupation = fatherOccupation,
                     height = height, weight = weight, religion = religion)
         if profilePic is not None:
-          os.remove(settings.MEDIA_ROOT+"/"+oldProfile)
           update_customerPic = Customer.objects.get(person_ptr_id = customerID)
           update_customerPic.profilePic = profilePic
           update_customerPic.save()
+          if oldProfile != "avatar.png":
+            os.remove(settings.MEDIA_ROOT+"/"+oldProfile)
       elif 'btnDelete' in request.POST:
         customerID = request.POST.get("customerID")
         oldProfile = request.POST.get("oldProfile")
-        os.remove(settings.MEDIA_ROOT+"/"+oldProfile)
         Customer.objects.filter(person_ptr_id = customerID).delete()
         Person.objects.filter(id = customerID).delete()
+        if oldProfile != "avatar.png":
+            os.remove(settings.MEDIA_ROOT+"/"+oldProfile)
       return HttpResponseRedirect('summary')
 
 class RegistrationView(View):
