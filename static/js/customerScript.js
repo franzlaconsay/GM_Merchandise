@@ -26,6 +26,7 @@ $("#personalNext").click(function(){
     isValid.fill(0,0);
     var letters = /^[A-Za-z ]+$/;
     var genderValid = false;
+    //alert($(fields[fields.length-2]).attr("name"));
 
     //gender check
     if ($("#maleRadio").is(':checked')==false && $("#femaleRadio").is(':checked')==false){
@@ -76,6 +77,23 @@ $("#personalNext").click(function(){
                 if($(fields[i]).val().length<3 || $(fields[i]).val().length>4){
                     $(fields[i]).css("border-color","#dc3545");
                     $(fields[i]).siblings().html('<i class="material-icons align-middle pr-1">error_outline</i>'+"Must be 3-4 digits.");
+                    isValid[i]=0;
+                    scrollTarget[targetIndex++] = $(fields[i]).attr("name");
+                }
+
+                else{
+                    $(fields[i]).css("border-color","#fcd462");
+                    $(fields[i]).siblings().html("");
+                    isValid[i]=1;
+                }
+            }
+
+            var emailPat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            //email
+            if($(fields[i]).attr("name")=="email"){
+                if(emailPat.test($(fields[i]).val())==false){
+                    $(fields[i]).css("border-color","#dc3545");
+                    $(fields[i]).siblings().html('<i class="material-icons align-middle pr-1">error_outline</i>'+"Must be a valid email address.");
                     isValid[i]=0;
                     scrollTarget[targetIndex++] = $(fields[i]).attr("name");
                 }
