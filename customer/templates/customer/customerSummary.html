@@ -70,6 +70,12 @@
 								<div class="form-row h6 pt-2">Date Registered</div>
 								<div class="form-row"><input type="date"class="form-control" name="dateReg" value="{{customer.dateRegistered|date:'o-m-d'}}" readonly></div>
 
+								<div class="form-row h6 pt-2">Email</div>
+								<div class="form-row"><input type="email"class="form-control" name="email" value="{{customer.email}}" required></div>
+
+								<div class="form-row h6 pt-2">Password</div>
+								<div class="form-row"><input type="text"class="form-control" name="password" value="{{customer.password}}" required></div>
+
 								<div class="form-row h6 pt-3">First Name</div>
 								<div class="form-row"><input type="text"class="form-control" name="firstName" value="{{customer.firstName}}" maxlength="50" pattern="[a-zA-Z. -]*" oninvalid="this.setCustomValidity('Must contain letters only.')"
 									oninput="this.setCustomValidity('')" required></div>

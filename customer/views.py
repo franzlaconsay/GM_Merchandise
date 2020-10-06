@@ -43,6 +43,8 @@ class SummaryView(View):
         weight = request.POST.get("weight")
         religion = request.POST.get("religion")
         profilePic = request.FILES.get("profilePic")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
         Customer.objects.filter(person_ptr_id = customerID).update(firstName = firstName, middleName = middleName, lastName = lastName,
                     street = street, barangay = barangay, city = city,
                     province = province, zipCode = zipCode, country = country,
@@ -50,7 +52,8 @@ class SummaryView(View):
                     spouseName = spouseName, spouseOccupation = spouseOccupation, childrenNum = childrenNum,
                     motherName = motherName, motherOccupation = motherOccupation,
                     fatherName  = fatherName, fatherOccupation = fatherOccupation,
-                    height = height, weight = weight, religion = religion)
+                    height = height, weight = weight, religion = religion,
+                    email = email, password = password)
         if profilePic is not None:
           update_customerPic = Customer.objects.get(person_ptr_id = customerID)
           update_customerPic.profilePic = profilePic
@@ -97,6 +100,8 @@ class RegistrationView(View):
     profilePic = request.FILES.get("profilePic")
     if(profilePic is None):
       profilePic="avatar.png"
+    email = request.POST.get("email")
+    password = request.POST.get("password")
     form = Customer(firstName = firstName, middleName = middleName, lastName = lastName,
                     street = street, barangay = barangay, city = city,
                     province = province, zipCode = zipCode, country = country,
@@ -104,7 +109,8 @@ class RegistrationView(View):
                     spouseName = spouseName, spouseOccupation = spouseOccupation, childrenNum = childrenNum,
                     motherName = motherName, motherOccupation = motherOccupation,
                     fatherName  = fatherName, fatherOccupation = fatherOccupation,
-                    height = height, weight = weight, religion = religion, profilePic = profilePic)
+                    height = height, weight = weight, religion = religion, profilePic = profilePic,
+                    email = email, password = password)
     form.save()
     #return render(request, 'customer/customerSummary.html')
     return HttpResponseRedirect('summary')

@@ -33,6 +33,8 @@ class Person(models.Model):
 class Customer(Person):
   dateRegistered = models.DateField(default=datetime.date.today)
   profilePic = models.ImageField(null=True)
+  email = models.EmailField(max_length=50, null=True)
+  password = models.CharField(max_length=50,null=True)
 
   class Meta:
     db_table = "Customer"
