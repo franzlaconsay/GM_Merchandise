@@ -1,0 +1,202 @@
+{% extends 'navigation/navigation.html' %}
+{% load static %}
+{% block title %}Product Registration{% endblock %}
+
+  {% block header %}
+  <link rel="stylesheet" href="{% static 'css/productStyles.css' %}">
+  <script>
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+      var forms = document.getElementsByClassName('needs-validation');
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+      }, false);
+      });
+      }, false);
+      })();
+  </script>
+  {% endblock %}
+
+  {% block content %}
+  <div class="container px-4 pb-5">
+    <div class="row h3">Add New Product</div>
+    <div class="row text-center mt-4" id="stepLinks">
+
+      <div class="col h5 mb-0 active" id="personalLink" href="#personalInfo">
+        Product Information
+      </div>
+
+    </div>
+    <div class="row" style=" border-right: 1px solid #fcd462;">
+        <div class="col-12 p-0"><div id="progress1"></div></div>
+    </div>
+    <div class="row border border-top-0">
+      <div class="col pt-3 pb-3">
+        <!--Add product form-->
+        <form class="needs-validation" id = "form1" action="" method="POST" autocomplete="off" novalidate enctype="multipart/form-data">
+          {% csrf_token %}
+            <div class="form-row">
+              <div class="col-md-4 mb-3">
+                <label for="validationCustom01">Category*</label>
+                <select class="form-control" id="validationCustom01" name = "category" required>
+                  <option value="Home">Home</option>
+                  <option value="Furniture">Furniture</option>
+                  <option value="Household">Household</option>
+                  <option value="Kitchen">Kitchen</option>
+                  <option value="Womens">Womens</option>
+                  <option value="Mens">Mens</option>
+                  <option value="Baby">Baby</option>
+                  <option value="Toys">Toys</option>
+                </select>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label for="validationCustom02">Brand*</label>
+                <input type="text" class="form-control" id="validationCustom02" value=""
+                  name = "brand" onkeypress = "return((event.keyCode >= 65 && event.keyCode <= 122) || (event.keyCode==32));" minlength="1" maxlength="20" required>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter valid brand. Length must range from(1-20).
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="validationCustomUsername">Name*</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="validationCustomName"
+                    aria-describedby="inputGroupPrepend" name = "name" onkeypress = "return((event.keyCode >= 65 && event.keyCode <= 122) || (event.keyCode==32));" minlength="1" maxlength="25" required>
+                  <div class="invalid-feedback">
+                    Please enter valid name. Length must range from(1-25).
+                  </div>
+                </div>
+              </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col-md-4 mb-3">
+              <label for="validationCustom03">Color</label>
+              <input type="text" class="form-control" id="validationCustom03"  name = "color" placeholder="None" onkeypress = "return((event.keyCode >= 65 && event.keyCode <= 122) || (event.keyCode==32));" minlength="3" maxlength="20">
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                    Please enter valid color. Length must range from(3-20).
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="validationCustom04">Length(inches)</label>
+              <input type="number" class="form-control" id="validationCustom04" name = "size1" min="0" max="999" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100"> 
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                    Please enter valid length. Length must range from(0-999).
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="validationCustom05">Width(inches)</label>
+              <input type="number" class="form-control" id="validationCustom05" name = "size2" min="0" max="999" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100">
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                    Please enter valid width. Width must range from(0-999).
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="validationCustomPrice">Price*</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupPrepend">₱</span>
+                </div>
+                <input type="number" class="form-control" id="validationCustomPrice" 
+                  aria-describedby="inputGroupPrepend" name = "price" min="0" max="999999" required>
+                <div class="invalid-feedback">
+                  Please enter price. It must not be more than 999999.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="validationCustom04">Stocks*</label>
+              <input type="number" class="form-control" id="validationCustom04" name = "stocks" min="0" max="999999" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                  Please enter no. of stocks. It must not be more than 999999.
+                </div>
+            </div>
+          </div>
+
+
+          <div class="form-row">
+              <div class="col-md-4 mb-3">
+                <label>Images</label>
+                <br>
+                <label for="profpic" class="profpic-upload ml-2 mb-0 mt-3">
+                <i class="material-icons align-middle">add_photo_alternate</i>
+                Choose File
+                </label>
+                <div class="picBox"><img src="{% static 'images/watch.jpg' %}" class="picBoxImage" id="profDisplay"></div> 
+                <input type="file" id="profpic" accept="image/*" onchange="readURL(this);" hidden name = "image1">
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label for="profpic1" class="profpic-upload ml-2 mb-0 mt-5">
+                  <i class="material-icons align-middle">add_photo_alternate</i>
+                  Choose File
+                </label>
+                <div class="picBox"><img src="{% static 'images/watch1.jpg' %}" class="picBoxImage" id="profDisplay1"></div> 
+                <input type="file" id="profpic1" accept="image/*" onchange="readURL1(this);" hidden name = "image2">
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label></label>
+                <label for="profpic2" class="profpic-upload ml-2 mb-0 mt-5">
+                  <i class="material-icons align-middle">add_photo_alternate</i>
+                  Choose File
+                </label>
+                <div class="picBox"><img src="{% static 'images/watch2.jpg' %}" class="picBoxImage" id="profDisplay2"></div> 
+                <input type="file" id="profpic2" accept="image/*" onchange="readURL2(this);" hidden name = "image3">
+              </div>
+          </div>
+
+          <button type="submit" class="btn formButton px-5 my-3" href="registration">Finish</button>
+            {% if messages %}
+            {% for result in messages %}
+            <a class="btn formButton px-5 my-3" href="summary">Product Dashboard</a>
+            <p class="text-success">{{result}}</p>
+            {% endfor%}
+            {% endif %}
+        </form>
+
+        </div>
+          <!--/Product information-->
+        </form>
+        <!--/Add customer form-->
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+
+  <!--scripts-->
+  {% block footer %}
+  <script src="{% static 'js/productScript.js' %}"></script>
+  <script>
+		$("a[href='../product/registration']").children().addClass('active').parent().parent().siblings().children().children().removeClass('active');
+	</script>
+  {% endblock %}
+  <!--/scripts-->

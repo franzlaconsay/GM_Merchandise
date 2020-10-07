@@ -1,0 +1,310 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang = eng>
+<head>
+	<title>GM Merchandise</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+	<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logofinal.png' %}" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+		$(window).scroll(function(){
+			$('nav').toggleClass('scrolled',$(this).scrollTop() > 0);
+		});
+	</script>
+</head>
+<body class="min-vh-100">
+	<nav class="navbar navbar-expand-lg navbar-light bg-custom sticky-top">
+	  <a class="navbar-brand" href="index">
+	    <img alt="Logo" src="{% static 'images/logofinal.png' %}" width=50 height="50">
+	  </a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+		<span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item dropdown pr-3">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          Categories
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="dropdown-item" href="#">Home</a>
+	          <a class="dropdown-item" href="#">Furniture</a>
+	          <a class="dropdown-item" href="#">Household</a>
+	          <a class="dropdown-item" href="#">Kitchen</a>
+	          <div class="dropdown-divider"></div>
+	          <a class="dropdown-item" href="#">Women's</a>
+	          <a class="dropdown-item" href="#">Men's</a>
+	          <a class="dropdown-item" href="#">Baby's</a>
+	          <a class="dropdown-item" href="#">Toys</a>
+	        </div>
+	      </li>
+	      <li class="nav-item dropdown pr-3">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          What's New
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="dropdown-item" href="#">Action</a>
+	          <a class="dropdown-item" href="#">Another action</a>
+	          <div class="dropdown-divider"></div>
+	          <a class="dropdown-item" href="#">Something else here</a>
+	        </div>
+	      </li>
+	      <li class="nav-item pr-3">
+	      	<a class="nav-link pr-3" href="#" data-toggle="modal" data-target="#aboutus">About Us</a>
+	      </li>
+	      <li class="nav-item pr-3">
+	      	<a class="nav-link pr-3" href="#" data-toggle="modal" data-target="#contactus">Contact Us</a>
+	      </li>
+	    </ul>
+
+	    <form class="form my-2 my-lg-0" >
+		    <div class="input-group">
+			    <input type="text" class="form-control" placeholder="Search">
+			    <div class="input-group-append">
+			      <button class="btn btn-yellow" type="button">
+			        <i class="fa fa-search"></i>
+			      </button>
+		    	</div>
+				</div>
+	    </form>
+			{% if user != "" %}
+			<input type="text" value="{{user}}" hidden>
+			<span class="navbar-text px-2">
+				{{firstname}}&nbsp;{{lastname}}
+			</span>
+			{% else %}
+			<span class="navbar-text pr-2">
+	      <a class="nav-link pr-3" href="#" data-toggle="modal" data-target="#signin">Login</a>
+			</span>
+			{% endif %}
+	    <a class="nav-link" href="#"><i class="fas fa-shopping-cart text-dark" ></i></a>
+	  </div>
+	</nav>
+
+	<div class="container mw-100 pt-2">
+	  <div class="row m-0">		   		    
+	    <div class="col-lg p-0">
+	    	<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+	    		<ol class="carousel-indicators">
+				    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+				    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+				    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+				  </ol>
+			    <div class="carousel-inner">
+			      <div class="carousel-item active" data-interval="6000">
+			        <img src="{% static 'images/mainhome.jpg' %}" class="d-block">
+			      </div>
+			      <div class="carousel-item" data-interval="0">
+			        <img src="{% static 'images/sale.jpg' %}" class="d-block img-fluid">
+			      </div>
+			      <div class="carousel-item">
+			        <img src="{% static 'images/mensheader.jpg' %}" class="d-block img-fluid">
+			      </div>
+			    </div>
+			    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+			      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			      <span class="sr-only">Previous</span>
+			    </a>
+			    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+			      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			      <span class="sr-only">Next</span>
+			    </a>
+			</div>
+	    </div>
+	  </div>
+	</div>
+	<div class="row m-0 p-5">
+		<div class="pt-2 container mx-auto">
+			<h3>Categories</h3>
+			<div class="d-flex justify-content-between bg-white mt-3 flex-wrap">
+			    <div class="mx-5 mt-3 text-center">
+			    	<a class="text-dark" href="#">
+			    		<img src="{% static 'images/home.png' %}" class="mb-3" width=170 height=170><br>
+			    		Home
+			    	</a>
+			    </div>
+			    <div class="mx-5 mt-3 text-center">
+			    	<a class="text-dark" href="#">
+			    		<img src="{% static 'images/furniture.png' %}" class="mb-3" width=170 height=170><br>
+			    		Furniture
+			    	</a>
+			    </div>
+			    <div class="mx-5 mt-3 text-center">
+			    	<a class="text-dark" href="#">
+			    		<img src="{% static 'images/household.png' %}" class="mb-3" width=170 height=170><br>
+			    		Household
+			    	</a>
+			    </div>
+			    <div class="mx-5 mt-3 text-center">
+			    	<a class="text-dark" href="#">
+			    		<img src="{% static 'images/kitchen.png' %}" class="mb-3" width=170 height=170><br>
+			    		Kitchen
+			    	</a>
+			    </div>
+			    <div class="mx-5 mt-3 text-center">
+			    	<a class="text-dark" href="#">
+			    		<img src="{% static 'images/womens.png' %}" class="mb-3" width=170 height=170><br>
+			    		Womens
+			    	</a>
+			    </div>
+			    <div class="mx-5 mt-3 text-center">
+			    	<a class="text-dark" href="#">
+			    		<img src="{% static 'images/mens.png' %}" class="mb-3" width=170 height=170><br>
+			    		Mens
+			    	</a>
+			    </div>
+			    <div class="mx-5 mt-3 text-center">
+			    	<a class="text-dark" href="#">
+			    		<img src="{% static 'images/baby.png' %}" class="mb-3" width=170 height=170><br>
+			    		Baby
+			    	</a>
+			    </div>
+			    <div class="mx-5 mt-3 text-center">
+			    	<a class="text-dark" href="#">
+			    		<img src="{% static 'images/toys.png' %}" class="mb-3" width=170 height=170><br>
+			    		Toys
+			    	</a>
+			    </div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+<!--SIGN IN-->
+<div class="modal fade" id="signin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-md" role="document">
+	    <div class="modal-content">
+	    	<div class="headers-form">
+	            <div class="contact-image">
+	                <img src="{% static 'images/logoFinalWhite.jpg' %}" alt="rocket_contact"/>
+	                <br>
+	            </div>
+	            <form class="form-signin" method="POST">
+								{% csrf_token %}
+	            	<h3 class="mb-5 p-0 text-yellow">Login</h3>
+		              <div class="form-label-group">
+		                <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+		              </div>
+
+		              <div class="form-label-group">
+		                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+		              </div>
+
+		              <div class="custom-control custom-checkbox mb-3">
+		                <input type="checkbox" class="custom-control-input" id="customCheck1">
+		                <label class="custom-control-label" for="customCheck1">Remember password</label>
+		              </div>
+		              <input class="btn btn-lg btn-yellow btn-block text-uppercase" type="submit" value="login">
+				</form>
+			</div> 	
+	    </div>	
+	</div>
+</div>
+<!--SIGN IN-->
+
+<!--ABOUT US-->
+<div class="modal fade" id="aboutus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content">
+	    	<div class="headers-form">
+	            <div class="contact-image">
+	                <img src="{% static 'images/logoFinalWhite.jpg' %}" alt="rocket_contact"/>
+	                <br><br>
+	            </div>
+	            <div class="p-5 aboutusmodal">
+	               <h3 class="text-white pb-0">About Us</h3>
+	               <div class="row">
+	                    <div class="col-md-12 text-justify">
+	                    	GM Merchandise (GM) was founded as a shoe store by Jecee Ryn Obrero and Franz Laconsay, in September 2020 in downtown Cebu. GM is now a leading wholesaler and distributor of general merchandise in the Philippines. With an average traffic of 4.2 million daily in the Philippines, 300,000 in China and over 20,000 product partners, GM Merchandise provides family fun experiences as it partners with the best-loved brands and events. 
+	                    </div>
+	                </div>
+	                <br><br><br><br>
+	                <h3 class="text-white pb-0">Mission Vision</h3>
+	               	<div class="row">
+	                    <div class="col-md-12 text-justify">
+	                       	GM Merchandise aims to become Asia’s most popular mall chain through constant innovation and partnership with the world’s best retailers. We provide the family fun mall experience that makes every day better for all.
+	                    </div>
+	                </div>
+	            </div>
+			</div> 	
+	    </div>	
+	</div>
+</div>
+<!--ABOUT US-->
+
+<!--CONTACT US-->
+<div class="modal fade" id="contactus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content">
+	    	<div class="headers-form">
+	            <div class="contact-image">
+	                <img src="{% static 'images/logoFinalWhite.jpg' %}" alt="rocket_contact"/>
+	            </div>
+	            <form method="">
+	               <h3 class="text-yellow">Drop Us a Message</h3>
+	               <div class="row">
+	                    <div class="col-lg-6">
+	                        <div class="form-group">
+	                            <input type="text" name="txtName" class="form-control" placeholder="Your Name *" value="" required>
+	                        </div>
+	                        <div class="form-group">
+	                            <input type="email" name="txtEmail" class="form-control" placeholder="Your Email *" value="" required>
+	                        </div>
+	                        <div class="form-group">
+	                            <input pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="txtPhone" class="form-control" placeholder="Your Phone Number *" value="" required>
+	                        </div>
+	                        <div class="form-group">
+	                            <textarea name="txtMsg" class="form-control msg" placeholder="Your Message *" required></textarea>
+	                        </div>
+	                        <div class="form-group">
+	                            <input class="btn btn-lg btn-yellow btn-block font-weight-bold p-1" type="submit">
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-6 px-4 pt-3">
+	                        <div class="form-group icon-container">
+	                            <div class="icons-container">
+									<i class="fas fa-mobile-alt icons"></i>
+									<i class="far fa-envelope icons"></i>
+									<i class="fab fa-instagram icons"></i>
+									<i class="fab fa-facebook icons"></i>
+									<i class="fab fa-twitter icons"></i>
+								</div>
+								<div class="icons-container">
+									<section class="padding-left">
+										<h5>Phone number</h5>
+										<p>+69219236730</p>
+									</section>
+									<section class="padding-left">
+										<h5>Email</h5>
+										<p>gmmerch@gmail.com</p>
+									</section>
+									<section class = "padding-left">
+										<h5>Instagram</h5>
+										<p>@gm_merchandise</p>
+									</section>
+									<section class = "padding-left">
+										<h5>Facebook</h5>
+										<p>@GMmerchandise</p>
+									</section>
+									<section class = "padding-left">
+										<h5>Twitter</h5>
+										<p>@GM_merchandise</p>
+									</section>
+								</div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </form>
+			</div> 	
+	    </div>	
+	</div>
+</div>
+<!--CONTACT US-->
+</html>

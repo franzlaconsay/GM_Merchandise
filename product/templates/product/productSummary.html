@@ -1,0 +1,222 @@
+{% extends 'navigation/navigation.html' %}
+{% load static %}
+{% load filter_tags %}
+
+	{% block title %}Product Summary{% endblock %}
+	{% block header %}
+	<link rel="stylesheet" href="{% static 'css/dataTables.bootstrap4.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/customerStyles.css' %}">
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.bootstrap4.min.css">
+	{% endblock %}
+
+	{% block content %}
+		<div class="container mt-3" id="div1" style="display: block">
+		<div class="row h3 mb-4 pl-2">Product Summary</div>
+		<table class="table table-striped table-borderless" style="width: 100%;" id="customerDataTable">
+			<thead>
+				<tr>
+					<th>Date Registered</th>
+					<th>Category</th>
+					<th>Brand</th>
+					<th>Name</th>
+					<th>Price</th>
+					<th>No. of Items</th>
+					<th style="display:none">SKU</th>
+					<th style="display:none">Color</th>
+					<th style="display:none">Length</th>
+					<th style="display:none">Width</th>
+					<th style="display:none">Image1</th>
+					<th style="display:none">Image2</th>
+					<th style="display:none">Image3</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for product in products %}                          
+				<tr>
+					<td>{{product.dateregistered|date:"Y-m-d"}}</td>
+					<td>{{product.category}}</td>
+					<td>{{product.brand}}</td>
+					<td>{{product.name}}</td>
+					<td>{{product.price}}</td>
+					<td>{{product.stocks}}</td>
+					<td style="display:none">{{product.sku}}</td>
+					<td style="display:none">{{product.color}}</td>
+					<td style="display:none">{{product.sizeDimension|splitfirst:"x"}}</td>
+					<td style="display:none">{{product.sizeDimension|splitsecond:"x"}}</td>
+					
+					{% for images in prodimages %}
+						{% if images.product_id == product.sku%}
+							<td style="display:none">{{images.image1|addbefore:"/static/images/"}}</td>
+						{% endif %}
+					{% endfor %}
+					
+					<td>
+						<button class="border-0 bg-transparent viewColor"><i class="material-icons align-middle">visibility</i></button>
+						|
+						<button class="border-0 bg-transparent deleteColor"><i class="material-icons align-middle">delete</i></button>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			<tfoot>
+				<th>Date Registered</th>
+				<th>Category</th>
+				<th>Brand</th>
+				<th>Name</th>
+				<th>Price</th>
+				<th>No. of Items</th>
+				<th>Action</th>
+			</tfoot>
+		</table>
+
+	<!-- Delete Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header p-2 pl-4 bg-danger text-white">
+					<h5 class="modal-title" id="deleteModalLabel">Delete Product</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<i class="material-icons align-middle text-white">close</i>
+					</button>
+				</div>
+				<form id="deleteForm" method="post">
+				{% csrf_token %} 
+				<div class="modal-body pl-4">
+					<input type="text" class="form-control" name="product-sku" placeholder="SKU" id="sku" hidden>
+				
+					<i class="material-icons align-middle text-danger">warning</i> Are you sure you want to delete this product?
+				</div>
+				<div class="modal-footer border-top-0">
+					<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" id = "btnDelete" name = "btnDelete" class="btn btn-danger">Delete</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- View Modal -->
+	<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header p-2 pl-4 bg-primary text-white">
+					<h5 class="modal-title" id="viewModalLabel">View Product</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<i class="material-icons align-middle text-white">close</i>
+					</button>
+				</div>
+				<form id="updateForm" method="post" enctype="multipart/form-data">
+               	{% csrf_token %}
+				<div class="modal-body mx-auto">
+					<div class="form-row h6 pl-1">SKU</div>
+					<div class="form-row"><input type="text" class="form-control" name="skuField" placeholder="SKU" id="skufieldo" readonly></div>
+
+					<div class="form-row h6 pl-1 pt-3">Date Registered</div>
+					<div class="form-row"><input type="date"class="form-control" name="dateRegField" readonly></div>
+
+					<div class="form-row h6 pl-1 pt-3">Category</div>
+					<div class="form-row">
+						 <select class="form-control" name = "categoryField" placeholder="Category" required>
+		                  <option value="Home">Home</option>
+		                  <option value="Furniture">Furniture</option>
+		                  <option value="Household">Household</option>
+		                  <option value="Kitchen">Kitchen</option>
+		                  <option value="Womens">Womens</option>
+		                  <option value="Mens">Mens</option>
+		                  <option value="Baby">Baby</option>
+		                  <option value="Toys">Toys</option>
+		                </select>
+					</div>
+
+					<div class="form-row h6 pl-1 pt-3">Brand</div>
+					<div class="form-row"><input type="text" class="form-control" name="brandField" placeholder="Brand" onkeypress = "return((event.keyCode >= 65 && event.keyCode <= 122) || (event.keyCode==32));" minlength="1" maxlength="20" required></div>
+
+					<div class="form-row h6 pl-1 pt-3">Name</div>
+					<div class="form-row"><input type="text" class="form-control" name="nameField" onkeypress = "return((event.keyCode >= 65 && event.keyCode <= 122) || (event.keyCode==32));" minlength="1" maxlength="25" required></div>
+
+					<div class="form-row h6 pl-1 pt-3">Price and Stocks</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<input type="number" class="form-control" name="priceField" placeholder="Price" min="0" max="999999" required>
+						</div>
+						<div class="form-group col-md-6">
+							<input type="number" class="form-control" name="stocksField" placeholder="Stocks" min="0" max="999999" required>
+						</div>
+					</div>
+
+					<div class="form-row h6 pl-1 pt-3">Color</div>
+					<div class="form-row"><input type="text" class="form-control" name="colorField" placeholder="Color" onkeypress = "return((event.keyCode >= 65 && event.keyCode <= 122) || (event.keyCode==32));" minlength="3" maxlength="20"></div>
+
+					<div class="form-row h6 pl-1 pt-3">Dimensions (Length x Width)</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<input type="number" class="form-control" name="lengthField" placeholder="Length" min="0" step="0.01" min="0" max="999">
+						</div>
+						<div class="form-group col-md-6">
+							<input type="number" class="form-control" name="widthField" placeholder="Width" min="0" step="0.01" min="0" max="999">
+						</div>
+					</div>
+
+					<div class="form-row h6 pl-1 pt-1">Images</div>
+					<div class="form-row mx-auto">
+						<div class="form-group col-md-4 ">
+							<label for="profpic" class="profpic-upload ml-2 mb-0 mt-2">
+			                <i class="material-icons align-middle">add_photo_alternate</i>
+			                Choose File
+			                </label>
+			                <div class="picBox" style="width:150px;height:150px;overflow:auto;"><img src="" class="picBoxImage" id="profDisplay" style="width:140px;height:140px;overflow:auto;"></div> 
+			                <input type="file" id="profpic" accept="image/*" onchange="readURL(this);" hidden name = "image1">
+						</div>
+						<div class="form-group col-md-4 ">
+							<label for="profpic1" class="profpic-upload ml-2 mb-0 mt-2">
+			                  <i class="material-icons align-middle">add_photo_alternate</i>
+			                  Choose File
+			                </label>
+			                <div class="picBox" style="width:150px;height:150px;overflow:auto;"><img src="" class="picBoxImage" id="profDisplay1" style="width:140px;height:140px;overflow:auto;"></div> 
+			                <input type="file" id="profpic1" accept="image/*" onchange="readURL1(this);" hidden name = "image2">
+						</div>
+						<div class="form-group col-md-4 ">
+			                <label for="profpic2" class="profpic-upload ml-2 mb-0 mt-2">
+			                  <i class="material-icons align-middle">add_photo_alternate</i>
+			                  Choose File
+			                </label>
+			                <div class="picBox" style="width:150px;height:150px;overflow:auto;"><img src="" class="picBoxImage" id="profDisplay2" style="width:140px;height:140px;overflow:auto;"></div> 
+			                <input type="file" id="profpic2" accept="image/*" onchange="readURL2(this);" hidden name = "image3">
+						</div>
+					</div>
+					<div class="modal-footer border-top-0">
+						<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+						 <button type="submit" id = "btnUpdate" name = "btnUpdate" class="btn btn-primary">Update</button>                                 
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	{% endblock %}
+
+	<!--scripts-->
+	{% block footer %}
+	<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+	<script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.bootstrap4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.colVis.min.js"></script>
+	<script>
+		$("a[href='../product/summary']").children().addClass('active').parent().parent().siblings().children().children().removeClass('active');
+	</script>
+		<script src="{% static 'js/productScript.js' %}"></script>
+
+		<script
+		src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"
+		integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk="
+		crossorigin="anonymous"></script>
+	{% endblock %}
+	<!--/scripts-->
