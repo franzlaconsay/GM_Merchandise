@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'navigation',
     'product',
     'landingpage',
+    'buy'
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,634 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang = eng>
+<head>
+	<title>GM Merchandise</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+	<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logofinal.png' %}" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+		$(window).scroll(function(){
+			$('nav').toggleClass('scrolled',$(this).scrollTop() > 0);
+		});
+	</script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-custom sticky-top">
+	  <a class="navbar-brand" href="index">
+	    <img alt="Logo" src="{% static 'images/logofinal.png' %}" width=50 height="50">
+	  </a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+		<span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item dropdown pr-3">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          Categories
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="dropdown-item" href="#homeHead">Home</a>
+	          <a class="dropdown-item" href="#furnitureHead">Furniture</a>
+	          <a class="dropdown-item" href="#householdHead">Household</a>
+	          <a class="dropdown-item" href="#kitchenHead">Kitchen</a>
+	          <div class="dropdown-divider"></div>
+	          <a class="dropdown-item" href="#womensHead">Women's</a>
+	          <a class="dropdown-item" href="#mensHead">Men's</a>
+	          <a class="dropdown-item" href="#babysHead">Baby's</a>
+	          <a class="dropdown-item" href="#toysHead">Toys</a>
+	        </div>
+	      </li>
+	      <li class="nav-item dropdown pr-3">
+	        <a class="nav-link pr-3" href="whatsnew">What's New</a>
+	      </li>
+	      <li class="nav-item pr-3">
+	      	<a class="nav-link pr-3" href="#" data-toggle="modal" data-target="#aboutus">About Us</a>
+	      </li>
+	      <li class="nav-item pr-3">
+	      	<a class="nav-link pr-3" href="#" data-toggle="modal" data-target="#contactus">Contact Us</a>
+	      </li>
+	    </ul>
+
+	    <form class="form my-2 my-lg-0" >
+		    <div class="input-group">
+			    <input type="text" class="form-control" placeholder="Search">
+			    <div class="input-group-append">
+			      <button class="btn btn-yellow" type="button">
+			        <i class="fa fa-search"></i>
+			      </button>
+		    	</div>
+				</div>
+	    </form>
+	    {% if user != "" %}
+			<input type="text" value="{{user}}" hidden>
+			<span class="navbar-text px-2">
+				{{firstname}}&nbsp;{{lastname}}
+			</span>
+			{% else %}
+			<span class="navbar-text pr-2">
+	      <a class="nav-link pr-3" href="#" data-toggle="modal" data-target="#signin">Login</a>
+			</span>
+			{% endif %}
+	    <a class="nav-link" href="../buy/ordersummary"><i class="fas fa-shopping-bag text-warning"></i></a>
+	  </div>
+	</nav>
+
+	<div class="row m-0 p-5" style="background-color:#F5F5F5">
+
+		<div class="pt-2 container mx-auto">
+
+			<h3 class="pb-3" id="homeHead" style="padding-top:100px;">Home</h3>
+			<div class="d-flex justify-content-between mt-4 flex-wrap">
+				{% for product,image in products %}
+				{% if product.category == "Home" %}
+				<div class="card mb-5 border-0" style="max-width: 18rem;">
+				  <div class="card-header bg-gray border-0" style="background-color:#fcd462">
+				  	<h5 class="font-weight-bold">{{product.name}}</h5>
+				  </div>
+				  <img class="card-img-top my-4" src="../static/images/{{image}}" alt="Card image cap" width=170 height=250>
+				  <div class="row card-body m-0 text-left" style="background-color:#fcd462">
+				  	<div class="col-6 p-0">
+				  		<h5 class="col-12">₱{{product.price}}</h5>
+				  		<h6 class="col-12 text-muted">{{product.stocks}} left</h6>
+				  	</div>
+				  	<button class="col-6 btn btn-danger" data-toggle="modal" data-target="#buyModal-{{product.sku}}">Buy</button>
+				  </div>
+				</div>
+
+				<div class="modal fade" id="buyModal-{{product.sku}}" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header p-2 pl-4 bg-primary text-white">
+								<h5 class="modal-title" id="buyModalLabel">{{product.name}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="buyForm" method="POST">
+								{% csrf_token %}
+								<div class="modal-body px-4">
+									₱{{product.price}} | {{product.stocks}} stocks
+									<div class="form-row h6 pt-2">
+										Quantity:
+										<input type="number" class="form-control" name="quantity" value="1">
+										<input type="text" name="sku" value="{{product.sku}}" hidden>
+										<input type="text" name="stocks" value="{{product.stocks}}" hidden>
+										<input type="text" name="user" value="{{user}}" hidden>
+									</div>						
+								</div>
+							
+							<div class="modal-footer border-top-0">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Buy</button>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+
+			<h3 class="pb-3" id="furnitureHead" style="padding-top:100px;">Furniture</h3>
+			<div class="d-flex justify-content-between mt-4 flex-wrap">
+				{% for product,image in products2 %}
+				{% if product.category == "Furniture" %}
+				<div class="card mb-5 border-0" style="max-width: 18rem;">
+				  <div class="card-header bg-gray border-0" style="background-color:#fcd462">
+				  	<h5 class="font-weight-bold">{{product.name}}</h5>
+				  </div>
+				  <img class="card-img-top my-4" src="../static/images/{{image}}" alt="Card image cap" width=170 height=250>
+				  <div class="row card-body m-0 text-left" style="background-color:#fcd462">
+				  	<div class="col-6 p-0">
+				  		<h5 class="col-12">₱{{product.price}}</h5>
+				  		<h6 class="col-12 text-muted">{{product.stocks}} left</h6>
+				  	</div>
+				  	<button class="col-6 btn btn-danger" data-toggle="modal" data-target="#buyModal-{{product.sku}}">Buy</button>
+				  </div>
+				</div>
+
+				<div class="modal fade" id="buyModal-{{product.sku}}" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header p-2 pl-4 bg-primary text-white">
+								<h5 class="modal-title" id="buyModalLabel">{{product.name}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="buyForm" method="POST">
+								{% csrf_token %}
+								<div class="modal-body px-4">
+									₱{{product.price}} | {{product.stocks}} stocks
+									<div class="form-row h6 pt-2">
+										Quantity:
+										<input type="number" class="form-control" name="quantity" value="1">
+										<input type="text" name="sku" value="{{product.sku}}" hidden>
+										<input type="text" name="stocks" value="{{product.stocks}}" hidden>
+										<input type="text" name="user" value="{{user}}" hidden>
+									</div>						
+								</div>
+							
+							<div class="modal-footer border-top-0">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Buy</button>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+			
+			<h3 class="pb-3" id="householdHead" style="padding-top:100px;">Household</h3>
+			<div class="d-flex justify-content-between mt-4 flex-wrap">
+				{% for product,image in products3 %}
+				{% if product.category == "Household" %}
+				<div class="card mb-5 border-0" style="max-width: 18rem;">
+				  <div class="card-header bg-gray border-0" style="background-color:#fcd462">
+				  	<h5 class="font-weight-bold">{{product.name}}</h5>
+				  </div>
+				  <img class="card-img-top my-4" src="../static/images/{{image}}" alt="Card image cap" width=170 height=250>
+				  <div class="row card-body m-0 text-left" style="background-color:#fcd462">
+				  	<div class="col-6 p-0">
+				  		<h5 class="col-12">₱{{product.price}}</h5>
+				  		<h6 class="col-12 text-muted">{{product.stocks}} left</h6>
+				  	</div>
+				  	<button class="col-6 btn btn-danger" data-toggle="modal" data-target="#buyModal-{{product.sku}}">Buy</button>
+				  </div>
+				</div>
+
+				<div class="modal fade" id="buyModal-{{product.sku}}" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header p-2 pl-4 bg-primary text-white">
+								<h5 class="modal-title" id="buyModalLabel">{{product.name}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="buyForm" method="POST">
+								{% csrf_token %}
+								<div class="modal-body px-4">
+									₱{{product.price}} | {{product.stocks}} stocks
+									<div class="form-row h6 pt-2">
+										Quantity:
+										<input type="number" class="form-control" name="quantity" value="1">
+										<input type="text" name="sku" value="{{product.sku}}" hidden>
+										<input type="text" name="stocks" value="{{product.stocks}}" hidden>
+										<input type="text" name="user" value="{{user}}" hidden>
+									</div>						
+								</div>
+							
+							<div class="modal-footer border-top-0">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Buy</button>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+
+			<h3 class="pb-3" id="kitchenHead" style="padding-top:100px;">Kitchen</h3>
+			<div class="d-flex justify-content-between mt-4 flex-wrap">
+				{% for product,image in products4 %}
+				{% if product.category == "Kitchen" %}
+				<div class="card mb-5 border-0" style="max-width: 18rem;">
+				  <div class="card-header bg-gray border-0" style="background-color:#fcd462">
+				  	<h5 class="font-weight-bold">{{product.name}}</h5>
+				  </div>
+				  <img class="card-img-top my-4" src="../static/images/{{image}}" alt="Card image cap" width=170 height=250>
+				  <div class="row card-body m-0 text-left" style="background-color:#fcd462">
+				  	<div class="col-6 p-0">
+				  		<h5 class="col-12">₱{{product.price}}</h5>
+				  		<h6 class="col-12 text-muted">{{product.stocks}} left</h6>
+				  	</div>
+				  	<button class="col-6 btn btn-danger" data-toggle="modal" data-target="#buyModal-{{product.sku}}">Buy</button>
+				  </div>
+				</div>
+
+				<div class="modal fade" id="buyModal-{{product.sku}}" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header p-2 pl-4 bg-primary text-white">
+								<h5 class="modal-title" id="buyModalLabel">{{product.name}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="buyForm" method="POST">
+								{% csrf_token %}
+								<div class="modal-body px-4">
+									₱{{product.price}} | {{product.stocks}} stocks
+									<div class="form-row h6 pt-2">
+										Quantity:
+										<input type="number" class="form-control" name="quantity" value="1">
+										<input type="text" name="sku" value="{{product.sku}}" hidden>
+										<input type="text" name="stocks" value="{{product.stocks}}" hidden>
+										<input type="text" name="user" value="{{user}}" hidden>
+									</div>						
+								</div>
+							
+							<div class="modal-footer border-top-0">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Buy</button>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+
+			<h3 class="pb-3" id="womensHead" style="padding-top:100px;">Women's</h3>
+			<div class="d-flex justify-content-between mt-4 flex-wrap">
+				{% for product,image in products5 %}
+				{% if product.category == "Womens" %}
+				<div class="card mb-5 border-0" style="max-width: 18rem;">
+				  <div class="card-header bg-gray border-0" style="background-color:#fcd462">
+				  	<h5 class="font-weight-bold">{{product.name}}</h5>
+				  </div>
+				  <img class="card-img-top my-4" src="../static/images/{{image}}" alt="Card image cap" width=170 height=250>
+				  <div class="row card-body m-0 text-left" style="background-color:#fcd462">
+				  	<div class="col-6 p-0">
+				  		<h5 class="col-12">₱{{product.price}}</h5>
+				  		<h6 class="col-12 text-muted">{{product.stocks}} left</h6>
+				  	</div>
+				  	<button class="col-6 btn btn-danger" data-toggle="modal" data-target="#buyModal-{{product.sku}}">Buy</button>
+				  </div>
+				</div>
+
+				<div class="modal fade" id="buyModal-{{product.sku}}" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header p-2 pl-4 bg-primary text-white">
+								<h5 class="modal-title" id="buyModalLabel">{{product.name}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="buyForm" method="POST">
+								{% csrf_token %}
+								<div class="modal-body px-4">
+									₱{{product.price}} | {{product.stocks}} stocks
+									<div class="form-row h6 pt-2">
+										Quantity:
+										<input type="number" class="form-control" name="quantity" value="1">
+										<input type="text" name="sku" value="{{product.sku}}" hidden>
+										<input type="text" name="stocks" value="{{product.stocks}}" hidden>
+										<input type="text" name="user" value="{{user}}" hidden>
+									</div>						
+								</div>
+							
+							<div class="modal-footer border-top-0">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Buy</button>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+
+			<h3 class="pb-3" id="mensHead" style="padding-top:100px;">Men's</h3>
+			<div class="d-flex justify-content-between mt-4 flex-wrap">
+				{% for product,image in products6 %}
+				{% if product.category == "Mens" %}
+				<div class="card mb-5 border-0" style="max-width: 18rem;">
+				  <div class="card-header bg-gray border-0" style="background-color:#fcd462">
+				  	<h5 class="font-weight-bold">{{product.name}}</h5>
+				  </div>
+				  <img class="card-img-top my-4" src="../static/images/{{image}}" alt="Card image cap" width=170 height=250>
+				  <div class="row card-body m-0 text-left" style="background-color:#fcd462">
+				  	<div class="col-6 p-0">
+				  		<h5 class="col-12">₱{{product.price}}</h5>
+				  		<h6 class="col-12 text-muted">{{product.stocks}} left</h6>
+				  	</div>
+				  	<button class="col-6 btn btn-danger" data-toggle="modal" data-target="#buyModal-{{product.sku}}">Buy</button>
+				  </div>
+				</div>
+
+				<div class="modal fade" id="buyModal-{{product.sku}}" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header p-2 pl-4 bg-primary text-white">
+								<h5 class="modal-title" id="buyModalLabel">{{product.name}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="buyForm" method="POST">
+								{% csrf_token %}
+								<div class="modal-body px-4">
+									₱{{product.price}} | {{product.stocks}} stocks
+									<div class="form-row h6 pt-2">
+										Quantity:
+										<input type="number" class="form-control" name="quantity" value="1">
+										<input type="text" name="sku" value="{{product.sku}}" hidden>
+										<input type="text" name="stocks" value="{{product.stocks}}" hidden>
+										<input type="text" name="user" value="{{user}}" hidden>
+									</div>						
+								</div>
+							
+							<div class="modal-footer border-top-0">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Buy</button>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+
+			<h3 class="pb-3" id="babysHead" style="padding-top:100px;">Baby's</h3>
+			<div class="d-flex justify-content-between mt-4 flex-wrap">
+				{% for product,image in products7 %}
+				{% if product.category == "Babys" %}
+				<div class="card mb-5 border-0" style="max-width: 18rem;">
+				  <div class="card-header bg-gray border-0" style="background-color:#fcd462">
+				  	<h5 class="font-weight-bold">{{product.name}}</h5>
+				  </div>
+				  <img class="card-img-top my-4" src="../static/images/{{image}}" alt="Card image cap" width=170 height=250>
+				  <div class="row card-body m-0 text-left" style="background-color:#fcd462">
+				  	<div class="col-6 p-0">
+				  		<h5 class="col-12">₱{{product.price}}</h5>
+				  		<h6 class="col-12 text-muted">{{product.stocks}} left</h6>
+				  	</div>
+				  	<button class="col-6 btn btn-danger" data-toggle="modal" data-target="#buyModal-{{product.sku}}">Buy</button>
+				  </div>
+				</div>
+
+				<div class="modal fade" id="buyModal-{{product.sku}}" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header p-2 pl-4 bg-primary text-white">
+								<h5 class="modal-title" id="buyModalLabel">{{product.name}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="buyForm" method="POST">
+								{% csrf_token %}
+								<div class="modal-body px-4">
+									₱{{product.price}} | {{product.stocks}} stocks
+									<div class="form-row h6 pt-2">
+										Quantity:
+										<input type="number" class="form-control" name="quantity" value="1">
+										<input type="text" name="sku" value="{{product.sku}}" hidden>
+										<input type="text" name="stocks" value="{{product.stocks}}" hidden>
+										<input type="text" name="user" value="{{user}}" hidden>
+									</div>						
+								</div>
+							
+							<div class="modal-footer border-top-0">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Buy</button>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+
+			<h3 class="pb-3" id="toysHead" style="padding-top:100px;">Toys</h3>
+			<div class="d-flex justify-content-between mt-4 flex-wrap">
+				{% for product,image in products8 %}
+				{% if product.category == "Toys" %}
+				<div class="card mb-5 border-0" style="max-width: 18rem;">
+				  <div class="card-header bg-gray border-0" style="background-color:#fcd462">
+				  	<h5 class="font-weight-bold">{{product.name}}</h5>
+				  </div>
+				  <img class="card-img-top my-4" src="../static/images/{{image}}" alt="Card image cap" width=170 height=250>
+				  <div class="row card-body m-0 text-left" style="background-color:#fcd462">
+				  	<div class="col-6 p-0">
+				  		<h5 class="col-12">₱{{product.price}}</h5>
+				  		<h6 class="col-12 text-muted">{{product.stocks}} left</h6>
+				  	</div>
+				  	<button class="col-6 btn btn-danger" data-toggle="modal" data-target="#buyModal-{{product.sku}}">Buy</button>
+				  </div>
+				</div>
+
+				<div class="modal fade" id="buyModal-{{product.sku}}" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header p-2 pl-4 bg-primary text-white">
+								<h5 class="modal-title" id="buyModalLabel">{{product.name}}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form id="buyForm" method="POST">
+								{% csrf_token %}
+								<div class="modal-body px-4">
+									₱{{product.price}} | {{product.stocks}} stocks
+									<div class="form-row h6 pt-2">
+										Quantity:
+										<input type="number" class="form-control" name="quantity" value="1">
+										<input type="text" name="sku" value="{{product.sku}}" hidden>
+										<input type="text" name="stocks" value="{{product.stocks}}" hidden>
+										<input type="text" name="user" value="{{user}}" hidden>
+									</div>						
+								</div>
+							
+							<div class="modal-footer border-top-0">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Buy</button>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+
+		</div>
+
+	</div>
+</body>
+<!--SIGN IN-->
+<div class="modal fade" id="signin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-md" role="document">
+	    <div class="modal-content">
+	    	<div class="headers-form">
+	            <div class="contact-image">
+	                <img src="{% static 'images/logoFinalWhite.jpg' %}" alt="rocket_contact"/>
+	                <br>
+	            </div>
+	            <form class="form-signin">
+	            	<h3 class="mb-5 p-0 text-yellow">Sign In</h3>
+		              <div class="form-label-group">
+		                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+		              </div>
+
+		              <div class="form-label-group">
+		                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		              </div>
+
+		              <div class="custom-control custom-checkbox mb-3">
+		                <input type="checkbox" class="custom-control-input" id="customCheck1">
+		                <label class="custom-control-label" for="customCheck1">Remember password</label>
+		              </div>
+		              <input class="btn btn-lg btn-yellow btn-block text-uppercase" type="submit">
+				</form>
+			</div> 	
+	    </div>	
+	</div>
+</div>
+<!--SIGN IN-->
+
+<!--ABOUT US-->
+<div class="modal fade" id="aboutus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content">
+	    	<div class="headers-form">
+	            <div class="contact-image">
+	                <img src="{% static 'images/logoFinalWhite.jpg' %}" alt="rocket_contact"/>
+	                <br><br>
+	            </div>
+	            <div class="p-5 aboutusmodal">
+	               <h3 class="text-white pb-0">About Us</h3>
+	               <div class="row">
+	                    <div class="col-md-12 text-justify">
+	                    	GM Merchandise (GM) was founded as a shoe store by Jecee Ryn Obrero and Franz, Laconsay, in September 2020 in downtown Cebu. GM is now a leading wholesaler and distributor of general merchandise in the Philippines. With an average traffic of 4.2 million daily in the Philippines, 300,000 in China and over 20,000 product partners, GM Merchandise provides family fun experiences as it partners with the best-loved brands and events. 
+	                    </div>
+	                </div>
+	                <br><br><br><br>
+	                <h3 class="text-white pb-0">Mission Vision</h3>
+	               	<div class="row">
+	                    <div class="col-md-12 text-justify">
+	                       	GM Merchandise aims to become Asia’s most popular mall chain through constant innovation and partnership with the world’s best retailers. We provide the family fun mall experience that makes every day better for all.
+	                    </div>
+	                </div>
+	            </div>
+			</div> 	
+	    </div>	
+	</div>
+</div>
+<!--ABOUT US-->
+
+<!--CONTACT US-->
+<div class="modal fade" id="contactus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content">
+	    	<div class="headers-form">
+	            <div class="contact-image">
+	                <img src="{% static 'images/logoFinalWhite.jpg' %}" alt="rocket_contact"/>
+	            </div>
+	            <form method="">
+	               <h3 class="text-yellow">Drop Us a Message</h3>
+	               <div class="row">
+	                    <div class="col-lg-6">
+	                        <div class="form-group">
+	                            <input type="text" name="txtName" class="form-control" placeholder="Your Name *" value="" required>
+	                        </div>
+	                        <div class="form-group">
+	                            <input type="email" name="txtEmail" class="form-control" placeholder="Your Email *" value="" required>
+	                        </div>
+	                        <div class="form-group">
+	                            <input pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="txtPhone" class="form-control" placeholder="Your Phone Number *" value="" required>
+	                        </div>
+	                        <div class="form-group">
+	                            <textarea name="txtMsg" class="form-control msg" placeholder="Your Message *" required></textarea>
+	                        </div>
+	                        <div class="form-group">
+	                            <input class="btn btn-lg btn-yellow btn-block font-weight-bold p-1" type="submit">
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-6 px-4 pt-3">
+	                        <div class="form-group icon-container">
+	                            <div class="icons-container">
+									<i class="fas fa-mobile-alt icons"></i>
+									<i class="far fa-envelope icons"></i>
+									<i class="fab fa-instagram icons"></i>
+									<i class="fab fa-facebook icons"></i>
+									<i class="fab fa-twitter icons"></i>
+								</div>
+								<div class="icons-container">
+									<section class="padding-left">
+										<h5>Phone number</h5>
+										<p>+69219236730</p>
+									</section>
+									<section class="padding-left">
+										<h5>Email</h5>
+										<p>gmmerch@gmail.com</p>
+									</section>
+									<section class = "padding-left">
+										<h5>Instagram</h5>
+										<p>@gm_merchandise</p>
+									</section>
+									<section class = "padding-left">
+										<h5>Facebook</h5>
+										<p>@GMmerchandise</p>
+									</section>
+									<section class = "padding-left">
+										<h5>Twitter</h5>
+										<p>@GM_merchandise</p>
+									</section>
+								</div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </form>
+			</div> 	
+	    </div>	
+	</div>
+</div>
+</html>

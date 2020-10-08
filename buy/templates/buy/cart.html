@@ -1,0 +1,145 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang = eng>
+<head>
+	<title>GM Merchandise</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+	<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logofinal.png' %}" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+		$(window).scroll(function(){
+			$('nav').toggleClass('scrolled',$(this).scrollTop() > 0);
+		});
+	</script>
+	<script type="text/javascript">
+			$(document).ready(function() {
+			$('.minus').click(function () {
+				var $input = $(this).parent().find('input');
+				var count = parseInt($input.val()) - 1;
+				count = count < 1 ? 1 : count;
+				$input.val(count);
+				$input.change();
+				return false;
+			});
+			$('.plus').click(function () {
+				var $input = $(this).parent().find('input');
+				$input.val(parseInt($input.val()) + 1);
+				$input.change();
+				return false;
+			});
+		});
+	</script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-custom sticky-top">
+	  <a class="navbar-brand" href="index">
+	    <img alt="Logo" src="{% static 'images/logofinal.png' %}" width=50 height="50">
+	  </a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+		<span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item dropdown pr-3">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          Categories
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="dropdown-item" href="#">Home</a>
+	          <a class="dropdown-item" href="#">Furniture</a>
+	          <a class="dropdown-item" href="#">Household</a>
+	          <a class="dropdown-item" href="#">Kitchen</a>
+	          <div class="dropdown-divider"></div>
+	          <a class="dropdown-item" href="#">Women's</a>
+	          <a class="dropdown-item" href="#">Men's</a>
+	          <a class="dropdown-item" href="#">Baby's</a>
+	          <a class="dropdown-item" href="#">Toys</a>
+	        </div>
+	      </li>
+	      <li class="nav-item dropdown pr-3">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          What's New
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="dropdown-item" href="#">Action</a>
+	          <a class="dropdown-item" href="#">Another action</a>
+	          <div class="dropdown-divider"></div>
+	          <a class="dropdown-item" href="#">Something else here</a>
+	        </div>
+	      </li>
+	      <li class="nav-item pr-3">
+	      	<a class="nav-link pr-3" href="#" data-toggle="modal" data-target="#aboutus">About Us</a>
+	      </li>
+	      <li class="nav-item pr-3">
+	      	<a class="nav-link pr-3" href="#" data-toggle="modal" data-target="#contactus">Contact Us</a>
+	      </li>
+	    </ul>
+
+	    <form class="form my-2 my-lg-0" >
+		    <div class="input-group">
+			    <input type="text" class="form-control" placeholder="Search">
+			    <div class="input-group-append">
+			      <button class="btn btn-yellow" type="button">
+			        <i class="fa fa-search"></i>
+			      </button>
+		    	</div>
+				</div>
+	    </form>
+	    <span class="navbar-text pr-2">
+	      <a class="nav-link pr-3" href="#" data-toggle="modal" data-target="#signin">Sign In</a>
+	    </span>
+	    <a class="nav-link" href="#"><i class="fas fa-shopping-cart text-dark" ></i></a>
+	  </div>
+	</nav>
+
+	<div class="row m-0 p-5" style="background-color:#F5F5F5">
+		<h3 class="pb-3">My Cart</h3>
+		<div class="p-0 border border-warning col-12 bg-white">
+			<div class="pt-2 m-0 row col-12 mb-3" style="background-color:#fcd462">
+				<h5 class="col-3 text-center">Product</h5>
+				<h5 class="col-4"></h5>
+				<h5 class="col-2 text-center">Quantity</h5>
+				<h5 class="col-2 text-center">Price</h5>
+				<h5 class="col-1 text-center">Total</h5>
+			</div>
+			<div class="pt-2 m-0 row col-12 mb-3">
+				<img class="col-3 my-3" src="{% static 'images/e1.jpg' %}" height=130>
+				<h5 class="col-4 text-center">Egg Beater</h5>
+				<div class="col-2">
+					<div class="row justify-content-md-center">
+						<span class="col-2 minus">-</span>
+						<input class="col-5 px-2 text-center" type="text" value="1"/>
+						<span class="col-2 plus">+</span>
+					</div>
+				</div>
+				<h5 class="col-2 text-center">P150.00</h5>
+				<h5 class="col-1">P150.00</h5>
+			</div>
+			<div class="pt-2 m-0 row col-12 mb-3">
+				<img class="col-3 my-3" src="{% static 'images/e1.jpg' %}" height=130>
+				<h5 class="col-4 text-center">Egg Beater</h5>
+				<div class="col-2">
+					<div class="row justify-content-md-center">
+						<span class="col-2 minus">-</span>
+						<input class="col-5 px-2 text-center" type="text" value="1"/>
+						<span class="col-2 plus">+</span>
+					</div>
+				</div>
+				<h5 class="col-2 text-center">P150.00</h5>
+				<h5 class="col-1">P150.00</h5>
+			</div>
+			<div class="pt-2 m-0 row col-12" style="background-color:#fcd462">
+				<h5 class="col-12 text-right">OVERALL TOTAL: P150.00</h5>
+			</div>
+		</div>
+		<div class="col-10"></div>
+		<button class="col-2 mt-2 btn btn-danger">Check Out</button>
+	</div>
+</body>
+</html>
